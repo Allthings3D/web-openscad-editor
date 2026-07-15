@@ -1,134 +1,55 @@
 # Project metadata
 [project]
-name = "AllThings3D Studio"
+name = "AllThings3D Creative Engine"
 uri = "https://allthings3d.co.za"
 
-# INJECT DUAL-THEME PREMIUM STYLES (AUTOMATIC LIGHT & DARK MODE)
+# INJECT DUAL-THEME PREMIUM STYLES FOR THE GENERATOR
 head-extra = """
 <style>
-    /* ==========================================================================
-       1. LIGHT THEME CONFIGURATION ( Crisp Studio White )
-       ========================================================================== */
     :root, [data-bs-theme="light"] {
-        --page-bg: #f8fafc !important;                 /* Light grey canvas backdrop */
-        --pane-bg-solid: #ffffff !important;           /* Pure white panels */
-        --page-fg: #0f172a !important;                 /* Slate-900 deep charcoal text */
-        --border-color: #e2e8f0 !important;           /* Thin light grey border lines */
-        --form-input-bg: #ffffff !important;          /* White input background fields */
-        --form-input-fg: #0f172a !important;          /* Dark input text */
-        --form-border: #cbd5e1 !important;             /* Slate-300 input outline borders */
-        --checkout-card-bg: #f1f5f9 !important;        /* Subtle grey background for checkout */
+        --page-bg: #f8fafc !important;
+        --pane-bg-solid: #ffffff !important;
+        --page-fg: #0f172a !important;
+        --border-color: #cbd5e1 !important;
+        --form-input-bg: #f8fafc !important;
+        --form-input-fg: #0f172a !important;
+        --form-border: #94a3b8 !important;
+        --checkout-card-bg: #f1f5f9 !important;
     }
-
-    /* ==========================================================================
-       2. DARK THEME CONFIGURATION ( Midnight Obsidian Black )
-       ========================================================================== */
     @media (prefers-color-scheme: dark) {
         :root, [data-bs-theme="dark"] {
-            --page-bg: #090d16 !important;             /* Deep space dark background */
-            --pane-bg-solid: #111827 !important;       /* Slate-900 panel background */
-            --page-fg: #f8fafc !important;             /* Slate-50 bright clean text font */
-            --border-color: #1f2937 !important;       /* Slate-800 subtle division lines */
-            --form-input-bg: #1f2937 !important;      /* Dark input text boxes */
-            --form-input-fg: #f8fafc !important;      /* Bright typing text font */
-            --form-border: #374151 !important;         /* Slate-700 soft input borders */
-            --checkout-card-bg: #1f2937 !important;    /* Dark card background for checkout */
+            --page-bg: #090d16 !important;
+            --pane-bg-solid: #111827 !important;
+            --page-fg: #f8fafc !important;
+            --border-color: #374151 !important;
+            --form-input-bg: #1f2937 !important;
+            --form-input-fg: #f8fafc !important;
+            --form-border: #4b5563 !important;
+            --checkout-card-bg: #1f2937 !important;
         }
     }
-
-    /* ==========================================================================
-       3. PREMIUM COMPONENT UNIVERSAL STYLING
-       ========================================================================== */
-    body {
-        background-color: var(--page-bg) !important;
-        color: var(--page-fg) !important;
-    }
-
-    /* Left 3D Viewport Area */
-    #pane-left {
-        background-color: var(--pane-bg-solid) !important;
-        border-right: 1px solid var(--border-color) !important;
-    }
-    
-    #model {
-        background-color: var(--page-bg) !important;   /* Matches layout background fluidly */
-    }
-
-    /* Right Customizer Sidebar */
-    #pane-right {
-        padding: 2rem !important;
-        background-color: var(--pane-bg-solid) !important;
-        border-left: 1px solid var(--border-color) !important;
-        box-shadow: -4px 0 24px rgba(15, 23, 42, 0.02) !important;
-    }
-
-    /* Sliders, Textboxes, Dropdowns */
-    .form-control, .form-select, .input-group-text {
-        border: 1px solid var(--form-border) !important;
-        border-radius: 8px !important;
-        padding: 10px 14px !important;
-        font-size: 0.95rem !important;
-        background-color: var(--form-input-bg) !important;
-        color: var(--form-input-fg) !important;
-    }
-
-    /* Active Highlight States when typing */
-    .form-control:focus, .form-select:focus {
-        border-color: #0056b3 !important;
-        box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.2) !important;
-    }
-
-    /* Header text & Collapse parameter boxes */
-    h3, h4, .group-header, label {
-        font-weight: 700 !important;
-        color: var(--page-fg) !important;
-        letter-spacing: -0.01em !important;
-    }
-
-    /* Security Rules: Hide layout system download noise */
-    #download-stl { display: none !important; }
-    #controls { display: none !important; }
+    body { background-color: var(--page-bg) !important; color: var(--page-fg) !important; }
+    #pane-left { background-color: var(--pane-bg-solid) !important; border-right: 1px solid var(--border-color) !important; }
+    #model { background-color: var(--page-bg) !important; }
+    #pane-right { padding: 2.5rem 2rem !important; background-color: var(--pane-bg-solid) !important; border-left: 1px solid var(--border-color) !important; }
+    .form-control, .form-select, .input-group-text { border: 1px solid var(--form-border) !important; border-radius: 8px !important; padding: 12px 16px !important; background-color: var(--form-input-bg) !important; color: var(--form-input-fg) !important; }
+    h3, h4, .group-header, label { font-weight: 700 !important; color: var(--page-fg) !important; }
+    #download-stl, #controls { display: none !important; }
 </style>
-
-<script>
-function redirectToPayFast() {
-    var nameInput = document.querySelector('[id*="Customer_Name"]') || document.querySelector('[name*="Customer_Name"]') || document.querySelector('input[type="text"]');
-    var customerText = nameInput ? nameInput.value : "NOT_PROVIDED";
-    
-    var thicknessInput = document.querySelector('[id*="Plate_Thickness"]') || document.querySelector('[name*="Plate_Thickness"]') || document.querySelector('input[type="range"]');
-    var thicknessValue = thicknessInput ? thicknessInput.value : "2.5";
-    
-    var merchantId = 25113480;
-    var merchantKey = xo7mpwdjhakex;
-    var itemPrice = "120.00"; 
-    var itemName = "Custom 3D Printed Name Keychain";
-    
-    var orderDescription = "Text: " + customerText + " | Thickness: " + thicknessValue + "mm";
-
-    var payfastUrl = "https://payfast.co.za" +
-        "?merchant_id=" + encodeURIComponent(merchantId) +
-        "&merchant_key=" + encodeURIComponent(merchantKey) +
-        "&amount=" + encodeURIComponent(itemPrice) +
-        "&item_name=" + encodeURIComponent(itemName) +
-        "&item_description=" + encodeURIComponent(orderDescription);
-
-    window.open(payfastUrl, "_blank");
-}
-</script>
 """
 
-# 2. BIND THE MODEL AND RENDER THE SIDEBAR CHECKOUT INTERFACE
+# BIND THE MODEL AND RENDER THE SIDEBAR CHECKOUT INTERFACE
 [[model]]
 file = "models/keychain.scad"
-index = false
+index = false # Keeps the generator on /keychain.html securely
 description-extra-html = """
 <div style="margin-top: 25px; padding: 20px; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; background-color: var(--checkout-card-bg);">
-    <h4 style="color: #0056b3; font-size: 1.15rem; font-weight: 700; margin-top: 0;">🇿🇦 Complete Your Order</h4>
+    <h4 style="color: #0056b3; font-size: 1.15rem; font-weight: 700; margin-top: 0;">🇿🇦 Order Details</h4>
     <p style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 15px; opacity: 0.85;">
-        Happy with your design layout? Click below to finalize your item and pay safely via PayFast using Credit Card or Instant EFT.
+        Our payment routing is currently undergoing updates. Customisation settings are live for testing.
     </p>
-    <button onclick="redirectToPayFast()" style="display: block; width: 100%; border: none; background-color: #0056b3; color: #ffffff; font-weight: bold; font-size: 1rem; padding: 12px; border-radius: 6px; cursor: pointer;">
-        Pay Securely via PayFast
+    <button style="display: block; width: 100%; border: none; background-color: #64748b; color: #ffffff; font-weight: bold; font-size: 1rem; padding: 12px; border-radius: 6px; cursor: not-allowed;" disabled>
+        🔒 Checkout Paused for Maintenance
     </button>
 </div>
 """

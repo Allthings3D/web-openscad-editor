@@ -67,16 +67,16 @@ function redirectToPayFast() {
     var thicknessInput = document.querySelector('[id*="Plate_Thickness"]') || document.querySelector('[name*="Plate_Thickness"]') || document.querySelector('input[type="range"]');
     var thicknessValue = thicknessInput ? thicknessInput.value : "2.5";
     
-    var merchantId = "PASTE_YOUR_PAYFAST_MERCHANT_ID_HERE";
-    var merchantKey = "PASTE_YOUR_PAYFAST_MERCHANT_KEY_HERE";
+    var merchantId = 25113480;
+    var merchantKey = xo7mpwdjhakex;
     var itemPrice = "120.00"; 
     var itemName = "Custom 3D Printed Name Keychain";
     
     var orderDescription = "Text: " + customerText + " | Thickness: " + thicknessValue + "mm";
 
     var payfastUrl = "https://payfast.co.za" +
-        "?merchant_id=" + encodeURIComponent(25113480) +
-        "&merchant_key=" + encodeURIComponent(xo7mpwdjhakex) +
+        "?merchant_id=" + encodeURIComponent(merchantId) +
+        "&merchant_key=" + encodeURIComponent(merchantKey) +
         "&amount=" + encodeURIComponent(itemPrice) +
         "&item_name=" + encodeURIComponent(itemName) +
         "&item_description=" + encodeURIComponent(orderDescription);

@@ -112,7 +112,7 @@ function redirectToPayFast() {
         "&item_name=" + encodeURIComponent(itemName) +
         "&item_description=" + encodeURIComponent(orderDescription);
 
-    window.location.href = payfastUrl;
+    window.open(payfastUrl, "_blank");
 }
 </script>
 """

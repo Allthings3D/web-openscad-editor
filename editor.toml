@@ -45,7 +45,7 @@ function redirectToPayFast() {
 # 2. BIND THE MODEL AND RENDER THE SIDEBAR CHECKOUT INTERFACE
 [[model]]
 file = "models/keychain.scad"
-index = true
+index = false # Moving this to false frees up your homepage!
 
 # Displays your custom local billing information card inside the parameters container panel
 description-extra-html = """

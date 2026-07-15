@@ -3,245 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AllThings3D Studio | Premium Custom 3D Prints</title>
+    <title>AllThings3D | Premium Custom 3D Printing South Africa</title>
     <style>
         /* ==========================================================================
-           1. UNIVERSAL VARIABLE SCHEMA & LIGHT THEME
+           1. AUTOMATIC DUAL-THEME VARIABLES (LIGHT & DARK MODE)
            ========================================================================== */
         :root {
-            --bg-main: #f8fafc;
+            --bg-primary: #f8fafc;
             --bg-card: #ffffff;
             --text-main: #0f172a;
             --text-muted: #475569;
             --border-color: #e2e8f0;
             --accent-color: #0056b3;
             --accent-hover: #004085;
-            --badge-bg: #e0f2fe;
-            --badge-text: #0369a1;
         }
 
-        /* ==========================================================================
-           2. AUTOMATIC DARK THEME OVERRIDE
-           ========================================================================== */
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg-main: #090d16;
+                --bg-primary: #090d16;
                 --bg-card: #111827;
                 --text-main: #f8fafc;
                 --text-muted: #94a3b8;
                 --border-color: #1f2937;
                 --accent-color: #3b82f6;
                 --accent-hover: #2563eb;
-                --badge-bg: #1e293b;
-                --badge-text: #38bdf8;
             }
         }
 
         /* ==========================================================================
-           3. SITE CORE COMPONENT STYLING
+           2. UNIVERSAL RESET & BASE LAYOUT
            ========================================================================== */
         body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-            background-color: var(--bg-main);
+            background-color: var(--bg-primary);
             color: var(--text-main);
             line-height: 1.6;
         }
 
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ==========================================================================
+           3. NAVBAR STYLING
+           ========================================================================== */
         header {
-            border-bottom: 1px solid var(--border-color);
             background-color: var(--bg-card);
-            padding: 1.5rem;
-            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
-            letter-spacing: -0.03em;
-            margin: 0;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: -0.02em;
         }
 
-        /* Hero Banner Section */
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* ==========================================================================
+           4. HERO BANNER
+           ========================================================================== */
         .hero {
-            max-width: 800px;
-            margin: 4rem auto;
             text-align: center;
-            padding: 0 1.5rem;
+            padding: 90px 20px;
+            background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-primary) 100%);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .hero h1 {
             font-size: 3rem;
             font-weight: 800;
-            letter-spacing: -0.04em;
-            margin-bottom: 1rem;
+            margin: 0 0 20px 0;
+            letter-spacing: -0.03em;
             line-height: 1.1;
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: var(--text-muted);
-            margin-bottom: 2.5rem;
             max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 35px auto;
         }
 
-        /* Main Call-to-Action Studio Launch Button */
-        .cta-btn {
+        .btn-primary {
             display: inline-block;
             background-color: var(--accent-color);
-            color: #ffffff;
+            color: #ffffff !important;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1.15rem;
-            padding: 16px 36px;
+            font-size: 1.1rem;
+            padding: 14px 32px;
             border-radius: 8px;
-            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2);
-            transition: all 150ms ease-in-out;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+            transition: all 0.2s ease-in-out;
         }
 
-        .cta-btn:hover {
+        .btn-primary:hover {
             background-color: var(--accent-hover);
             transform: translateY(-2px);
         }
 
-        /* Dynamic Product Grid Showroom */
-        .product-grid {
-            max-width: 1000px;
-            margin: 4rem auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            padding: 0 1.5rem;
+        /* ==========================================================================
+           5. PRODUCT RANGE GRID
+           ========================================================================== */
+        .products-section {
+            padding: 80px 0;
         }
 
-        .product-card {
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 50px;
+            letter-spacing: -0.02em;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 2rem;
+            padding: 30px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
-            position: relative;
+            transition: transform 0.2s ease;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        .product-card h2 {
-            font-size: 1.35rem;
-            font-weight: 700;
-            margin-top: 0;
-            margin-bottom: 0.5rem;
+        .card:hover {
+            transform: translateY(-4px);
         }
 
-        .product-card p {
+        .card h3 {
+            font-size: 1.4rem;
+            margin: 0 0 12px 0;
+        }
+
+        .card p {
             color: var(--text-muted);
             font-size: 0.95rem;
-            margin-bottom: 1.5rem;
+            margin: 0 0 25px 0;
+            flex-grow: 1;
         }
 
-        .price-badge {
+        .btn-secondary {
             display: inline-block;
-            background-color: var(--badge-bg);
-            color: var(--badge-text);
-            font-weight: 700;
-            font-size: 0.85rem;
-            padding: 4px 12px;
-            border-radius: 9999px;
-            align-self: flex-start;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-link {
-            text-decoration: none;
-            color: var(--accent-color);
-            font-weight: 700;
-            font-size: 0.95rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .card-link:hover {
-            color: var(--accent-hover);
-        }
-
-        footer {
             text-align: center;
-            padding: 4rem 1.5rem;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-            margin-top: 6rem;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 6px;
+            background-color: var(--bg-primary);
+            transition: background 0.15s ease;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--border-color);
+        }
+
+        /* ==========================================================================
+           6. FOOTER STYLING
+           ========================================================================== */
+        footer {
             background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- SITE NAVIGATION BAR -->
+    <!-- TOP NAVIGATION BAR -->
     <header>
-        <p class="logo">AllThings3D Studio</p>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">AllThings<span>3D</span></a>
+        </div>
     </header>
 
-    <!-- HERO DISPLAY CARDS -->
-    <main>
-        <section class="hero">
-            <h1>Design Your Own Custom 3D Prints</h1>
-            <p>Use our interactive live 3D customizer tools to create your personalized nameplates, keychains, and tags. Printed locally and shipped securely to your door.</p>
-            <a href="/keychain" class="cta-btn">🚀 Open 3D Design App</a>
-        </section>
+    <!-- HERO CALL TO ACTION -->
+    <section class="hero">
+        <div class="container">
+            <h1>Design Your Own Premium<br>3D Printed Products</h1>
+            <p>Don't just buy off a shelf. Use our live interactive studio tool to sculpt your name, tweak sizes, and preview your item in real-time before checkout.</p>
+            <a href="/keychain" class="btn-primary">✨ Open 3D Studio Customizer</a>
+        </div>
+    </section>
 
-        <!-- PRODUCT COLLECTION HUB -->
-        <section class="product-grid">
-            
-            <!-- PRODUCT 1: CUSTOM KEYCHAINS -->
-            <div class="product-card">
-                <div>
-                    <h2>Custom Name Keychains</h2>
-                    <p>Fuses letters smoothly into a single solid unit using custom block fonts. Durable construction built for daily usage.</p>
+    <!-- EXPLORE PRODUCT LINES -->
+    <section class="products-section">
+        <div class="container">
+            <h2 class="section-title">Our Production Catalog</h2>
+            <div class="grid">
+                
+                <!-- CARD 1: KEYCHAINS -->
+                <div class="card">
+                    <div>
+                        <h3>🏷️ Custom Name Keychains</h3>
+                        <p>Perfect for business branding, birthday gifts, or school bags. Fully customizable lettering fused into a solid dynamic backing plate.</p>
+                    </div>
+                    <a href="/keychain" class="btn-secondary">Launch Customizer</a>
                 </div>
-                <div>
-                    <span class="price-badge">From R120.00</span>
-                    <br>
-                    <a href="/keychain" class="card-link">Start Designing &rarr;</a>
+
+                <!-- CARD 2: CAKE TOPPERS -->
+                <div class="card">
+                    <div>
+                        <h3>🎂 Custom Cake Toppers</h3>
+                        <p>Elevate celebrations with personalized name and age signage. Rigid stems built straight into your 3D vector blueprints.</p>
+                    </div>
+                    <a href="/keychain" class="btn-secondary">Launch Customizer</a>
                 </div>
+
+                <!-- CARD 3: CLICKERS -->
+                <div class="card">
+                    <div>
+                        <h3>🕹️ Standard Fidget Clickers</h3>
+                        <p>Our ultra-satisfying mechanical clickers and tactile desk gadgets. Fixed geometric prints made with premium local polymers.</p>
+                    </div>
+                    <a href="https://gumroad.com" target="_blank" class="btn-secondary">Buy Directly</a>
+                </div>
+
             </div>
+        </div>
+    </section>
 
-            <!-- PRODUCT 2: CAKE TOPPERS -->
-            <div class="product-card">
-                <div>
-                    <h2>Custom Cake Toppers</h2>
-                    <p>Add names, businesses, or specialized age milestone indicators mounted onto integrated food-safe insertion stakes.</p>
-                </div>
-                <div>
-                    <span class="price-badge">Coming Soon</span>
-                    <br>
-                    <span style="color: var(--text-muted); font-size: 0.95rem; font-weight:700;">In Production 🛠️</span>
-                </div>
-            </div>
-
-            <!-- PRODUCT 3: NORMAL CLICKERS -->
-            <div class="product-card">
-                <div>
-                    <h2>Mechanical Clickers</h2>
-                    <p>Fixed-shape utility gadgets and tactile stress-relief clicker keychains. Available in various solid color matrices.</p>
-                </div>
-                <div>
-                    <span class="price-badge">Coming Soon</span>
-                    <br>
-                    <span style="color: var(--text-muted); font-size: 0.95rem; font-weight:700;">In Production 🛠️</span>
-                </div>
-            </div>
-
-        </section>
-    </main>
-
-    <!-- SECURE TRANSACTION FOOTER PROXY -->
+    <!-- SECURE LOCAL FOOTER -->
     <footer>
-        <p>&copy; 2026 AllThings3D Studio. Built in South Africa. Secure transactions handled via PayFast.</p>
+        <div class="container">
+            <p>&copy; 2026 AllThings3D South Africa. All Rights Reserved.</p>
+            <p style="font-size: 0.75rem; margin-top: 5px; opacity: 0.7;">🔒 Payment transactions secured directly via PayFast SA.</p>
+        </div>
     </footer>
 
 </body>

@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Compile 3D Web App Editor
-        uses: yawkat/web-openscad-editor@v1
+        uses: yawkat/web-openscad-editor@v2
         with:
           config: editor.toml
 

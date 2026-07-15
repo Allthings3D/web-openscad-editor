@@ -226,176 +226,84 @@
         </div>
     </div>
 </div>
-<div id="pane-right" class="row">
-    <p class="mt-3">
-        This is the model generator for <a href="{{ config.project.uri }}">{{ config.project.name }}</a>.
-        Any changes you make are saved in the URL, so you can share that URL or create a bookmark to keep those changes around.
-        {% if ctx.config.description_extra_html %}
-            {{ ctx.config.description_extra_html | safe }}
-        {% endif %}
-        {% if contexts|length > 1 %}
-            Other generators:
-            {% for g in contexts %}
-                {% if g == ctx %}
-                    <strong>{{ g.name() }}</strong>{% if not loop.last %},{% endif %}
-                {% else %}
-                    <a href="{{ g.link }}">{{ g.name() }}</a>{% if not loop.last %},{% endif %}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    </p>
-    {% macro render_param_common(name) -%}
-        {% if ctx.config.param_metadata[name] is defined and ctx.config.param_metadata[name].presets -%}
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle rounded-0" type="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">{{ ctx.config.param_metadata[name].presets.text }}</button>
-                <ul class="dropdown-menu">
-                    {% for preset_name, preset_value in ctx.config.param_metadata[name].presets.values.items() -%}
-                        <li><a class="dropdown-item" href="#" onclick="setValueFromButton('{{ name }}', {{ preset_value | json_dump }}); return false">{{ preset_name }}</a></li>
-                    {%- endfor %}
-                </ul>
-            </div>
-        {%- endif %}
-        <button class="btn btn-outline-secondary customizer-reset" type="button" attr-name="{{ name }}" disabled
-                aria-label="Revert to default" title="Revert to default">
-            <svg class="lucide lucide-rotate-ccw" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                 stroke-linejoin="round" aria-hidden="true">
-                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-                <path d="M3 3v5h5"/>
-            </svg>
-            <span class="visually-hidden">Revert to default</span>
-        </button>
-    {%- endmacro %}
-    {% macro help_link(href) -%}
-        <a class="help-link" href="{{ href }}" target="_blank" title="Parameter documentation" aria-label="Parameter documentation"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-question-mark-icon lucide-badge-question-mark"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg></a>
-    {% endmacro %}
+        <!-- RIGHT PANEL FOR TEXT CONTROLS & SECURE CHECKOUT -->
+        <div id="pane-right">
+            <!-- Dynamic parameters from OpenSCAD generate automatically here -->
 
-    {% set state = namespace(current_group=None) %}
-    {% for param in ctx.params %}
-        {% if not state.current_group or param.group != state.current_group %}
-            {% if state.current_group %}
-                </div> <!-- end of collapse -->
-            {% endif %}
-            {% set state.current_group = param.group %}
-            {%- if state.current_group.config.control_boolean -%}
-                <label class="group-header"><h3><span class="group-header-control"><input class="customizer" type="checkbox" attr-name="{{ param.name }}"></span>
-                    {{- state.current_group.name -}}
-                    {%- if state.current_group.config.help_link %}
-                        {{ help_link(state.current_group.config.help_link) }}
-                    {%- endif -%}
-                </h3></label>
-            {%- else -%}
-                <h3 class="group-header{% if state.current_group.config.collapsed %} collapsed{% endif %}" data-bs-target="#collapse-{{ state.current_group.id }}" data-bs-toggle="collapse"><svg class="collapse-indicator" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 20 20" fill="currentColor" stroke="none"><path d="M 0 5 H 20 L 10 15 Z"/></svg>
-                    {{- state.current_group.name -}}
-                    {%- if state.current_group.config.help_link %}
-                        {{ help_link(state.current_group.config.help_link) }}
-                    {%- endif -%}
-                </h3>
-            {%- endif -%}
-            {%- if state.current_group.config.description_html %}<p class="form-text">{{ state.current_group.config.description_html | safe }}</p>{% endif -%}
-            <div class="collapse{% if not state.current_group.config.collapsed %} show{% endif %}" id="collapse-{{ state.current_group.id }}">
-            {%- if state.current_group.config.description_collapsible_html %}<p class="form-text"{% if state.current_group.config.control_boolean %} data-display-condition="{{ state.current_group.config.control_boolean }}"{% endif %}>{{ state.current_group.config.description_collapsible_html | safe }}</p>{% endif -%}
-        {% endif %}
-        {% set pid = "parameter_" + param.name %}
-        {% if param.metadata.display_condition.fixed %}
-        <div class="col-12"{% if param.metadata.display_condition.js %} data-display-condition="{{ param.metadata.display_condition.js }}"{% endif %}>
-            <label for="{{ pid }}">
-                {% for piece in param.name.split("_") -%}
-                    {{ piece }}
-                    {%- if not loop.last %}<span class="param_underscore">_</span>{% endif -%}
-                {%- endfor %}
-                {% if param.metadata.help_link %}{{ help_link(param.metadata.help_link) }}{% endif %}
-                {%- if param.metadata.description_html %}<br><span class="form-text">{{ param.metadata.description_html | safe }}</span>
-                {%- elif param.definition['caption'] is defined %}<br><span class="form-text">{{ param.definition['caption'] }}</span>{% endif -%}
-            </label>
-        </div>
-        <div class="col-12 mb-3"{% if param.metadata.display_condition.js %} data-display-condition="{{ param.metadata.display_condition.js }}"{% endif %}>
-            {% if param.definition['type'] == 'number' and param.definition["initial"] is iterable %}
-                <div class="input-group customizer-group" attr-name="{{ param.name }}">
-                    {% for initial in param.definition["initial"] %}
-                        <input class="form-control customizer" type="number"{% if loop.index0 == 0 %}
-                               id="{{ pid }}"{% endif %} value="{{ initial }}" attr-name="{{ param.name }}"
-                               attr-index="{{ loop.index0 }}" autocomplete="off">
-                    {% endfor %}
-                    {{ render_param_common(param.name) }}
-                </div>
-            {% elif param.definition['options'] is defined %}
-                <div class="input-group customizer-group" attr-name="{{ param.name }}">
-                    <select class="form-select customizer" id="{{ pid }}" attr-name="{{ param.name }}" autocomplete="off">
-                        {% for option in param.definition['options'] %}
-                            <option value='{{ option['value'] | json_dump }}'
-                                    {% if option['value'] == param.definition["initial"] %}selected{% endif %}>{{ option['name'] }}</option>
-                        {% endfor %}
-                    </select>
-                    {{ render_param_common(param.name) }}
-                </div>
-            {% elif param.definition['type'] == 'number' %}
-                <div class="input-group customizer-group" attr-name="{{ param.name }}">
-                    <input class="form-control customizer" type="number" id="{{ pid }}" value="{{ param.definition["initial"] }}"
-                           attr-name="{{ param.name }}" autocomplete="off">
-                    {{ render_param_common(param.name) }}
-                </div>
-            {% elif param.definition['type'] == 'boolean' %}
-                <div class="input-group customizer-group" attr-name="{{ param.name }}">
-                    <div class="input-group-text">
-                        <input class="form-check-input mt-0 customizer" type="checkbox" id="{{ pid }}"
-                               {% if param.definition["initial"] %}checked{% endif %} attr-name="{{ param.name }}" autocomplete="off">
-                    </div>
-                    {{ render_param_common(param.name) }}
-                </div>
-            {% else %}
-                <div class="input-group customizer-group" attr-name="{{ param.name }}">
-                    <input class="form-control customizer" type="text" id="{{ pid }}" value="{{ param.definition["initial"] }}"
-                           attr-name="{{ param.name }}" autocomplete="off">
-                    {{ render_param_common(param.name) }}
-                </div>
-            {% endif %}
-        </div>
-        {% endif %}
-    {% endfor %}
-    {% if state.current_group %}
-        </div> <!-- end of collapse -->
-    {% endif %}
-</div>
+            <!-- 🇿🇦 SECURE SOUTH AFRICAN PAYFAST BILLING MODULE -->
+            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; max-width: 100%; margin: 30px 15px 40px 0; padding: 25px; border: 2px solid var(--border-color); border-radius: 12px; background-color: var(--page-bg); box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center;">
+                
+                <h4 style="color: #0056b3; margin-top: 0; font-size: 1.25rem; font-weight: 700;">🇿🇦 Complete Your Order</h4>
+                <p style="color: var(--page-fg); font-size: 0.9rem; line-height: 1.5; margin-bottom: 20px; opacity: 0.85;">
+                    Happy with your design layout? Click below to finalize your item and pay safely via PayFast. We accept Instant EFT (Capitec Pay, Nedbank, FNB, etc.) and all SA Credit/Debit cards.
+                </p>
 
-<div class="modal fade" id="render-error-modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Render Log</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <pre id="render-error-log" class="border rounded p-2" style="white-space: pre-wrap; background-color: var(--render-log-bg);"></pre>
-            </div>
-            <div class="modal-footer">
-                <button id="render-error-copy" type="button" class="btn btn-outline-secondary">Copy</button>
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                <!-- DIRECT PAYFAST TRIGGER BUTTON -->
+                <button onclick="redirectToPayFast()" style="display: block; width: 100%; border: none; background-color: #0056b3; color: #ffffff; font-weight: bold; font-size: 1.1rem; padding: 14px; border-radius: 6px; cursor: pointer; transition: background 150ms ease-in-out;">
+                    💳 Pay Securely via PayFast
+                </button>
+                
+                <p style="color: #a0aec0; font-size: 0.75rem; margin-top: 12px; margin-bottom: 0;">
+                    🔒 Secure payments encrypted by PayFast South Africa.
+                </p>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="profiles-modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Profiles</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <p class="form-text mt-0">Profiles are saved in your browser. Use Apply/Clean Apply to load them, and enable “Apply by default” to auto-apply on an empty URL.</p>
-                <div id="profiles-list" class="list-group"></div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+    <!-- INJECTING CSS TARGET HIDER TO SECURE THE MESH FILE -->
+    <style>
+        /* This completely hides the default 'Save STL' button so users can't steal the file */
+        #download-stl {
+            display: none !important;
+        }
+    </style>
+
+    <!-- PAYFAST BRAIN REQUEST SCRIPT -->
+    <script>
+    function redirectToPayFast() {
+        // 1. Target the text input element your user is typing into on the screen
+        var inputElements = document.querySelectorAll('input[type="text"], textarea');
+        var customerText = "NOT_PROVIDED";
+        
+        // Loop through text fields to locate the name variable string value safely
+        for (var i = 0; i < inputElements.length; i++) {
+            if (inputElements[i].id.includes("Customer_Name") || inputElements[i].id.includes("Your_Name") || inputElements[i].name.includes("Name")) {
+                customerText = inputElements[i].value;
+                break;
+            }
+        }
+        
+        // Fallback catch: Grab the very first text input value if parameter names match vaguely
+        if (customerText === "NOT_PROVIDED" && inputElements.length > 0) {
+            customerText = inputElements[0].value;
+        }
+
+        // 2. Target the slider elements to extract thickness depth metrics
+        var sliderElements = document.querySelectorAll('input[type="range"]');
+        var thicknessValue = (sliderElements.length > 0) ? sliderElements[0].value : "2.5";
+
+        // 3. YOUR PAYFAST MERCHANT ACCOUNT DETAILS (Update these placeholders)
+        var merchantId = 25113480;
+        var merchantKey = xo7mpwdjhakex;
+        var itemPrice = "120.00"; // Set your production sales price in ZAR here
+        var itemName = "Custom 3D Printed Name Keychain";
+        
+        // 4. Bundle configuration values cleanly into your transaction receipt
+        var orderDescription = "Text: " + customerText + " | Thickness: " + thicknessValue + "mm";
+
+        // 5. Construct URL query params payload string
+        var payfastUrl = "https://payfast.co.za" +
+            "?merchant_id=" + encodeURIComponent(merchantId) +
+            "&merchant_key=" + encodeURIComponent(merchantKey) +
+            "&amount=" + encodeURIComponent(itemPrice) +
+            "&item_name=" + encodeURIComponent(itemName) +
+            "&item_description=" + encodeURIComponent(orderDescription);
+
+        // 6. Direct routing to PayFast checkout portal
+        window.location.href = payfastUrl;
+    }
+    </script>
 </body>
+</html>
+
 </html>

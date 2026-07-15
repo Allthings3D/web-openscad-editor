@@ -1,11 +1,61 @@
-# Project metadata
+ # Project metadata
 [project]
-name = "Custom 3D Print Studio"
-uri = "https://yourdomain.com"
-export-filename-prefix = "custom-keychain"
+name = "AllThings3D Customizer"
+uri = "https://allthings3d.co.za"
 
-# Model configuration files
+# 1. INJECT THE SECURE PAYFAST BRAIN INTO THE SITE HEAD
+head-extra = """
+<style>
+    /* Security Rule: Lock down the model by hiding the default Save STL button completely */
+    #download-stl { display: none !important; }
+</style>
+
+<script>
+function redirectToPayFast() {
+    // A. Locate the inputs generated on your live webpage layout
+    var nameInput = document.querySelector('[id*="Customer_Name"]') || document.querySelector('[name*="Customer_Name"]') || document.querySelector('input[type="text"]');
+    var customerText = nameInput ? nameInput.value : "NOT_PROVIDED";
+    
+    var thicknessInput = document.querySelector('[id*="Plate_Thickness"]') || document.querySelector('[name*="Plate_Thickness"]') || document.querySelector('input[type="range"]');
+    var thicknessValue = thicknessInput ? thicknessInput.value : "2.5";
+    
+    // B. Your official PayFast integration identifiers (Fill these in!)
+    var merchantId = 25113480;
+    var merchantKey =  xo7mpwdjhakex;
+    var itemPrice = "120.00"; 
+    var itemName = "Custom 3D Printed Name Keychain";
+    
+    // C. Packaging configuration variables straight into the digital receipt
+    var orderDescription = "Text: " + customerText + " | Thickness: " + thicknessValue + "mm";
+
+    // D. Assemble secure URL parameters payload
+    var payfastUrl = "https://payfast.co.za" +
+        "?merchant_id=" + encodeURIComponent(merchantId) +
+        "&merchant_key=" + encodeURIComponent(merchantKey) +
+        "&amount=" + encodeURIComponent(itemPrice) +
+        "&item_name=" + encodeURIComponent(itemName) +
+        "&item_description=" + encodeURIComponent(orderDescription);
+
+    // E. Execute routing redirection to PayFast gate portal
+    window.location.href = payfastUrl;
+}
+</script>
+"""
+
+# 2. BIND THE MODEL AND RENDER THE SIDEBAR CHECKOUT INTERFACE
 [[model]]
 file = "models/keychain.scad"
-description-extra-html = "<p>Design your custom 3D printed keychain below using the interactive sliders!</p>"
+index = true
 
+# Displays your custom local billing information card inside the parameters container panel
+description-extra-html = """
+<div style="margin-top: 25px; padding: 20px; border: 2px solid var(--border-color); border-radius: 12px; background-color: var(--render-log-bg); text-align: center;">
+    <h4 style="color: #0056b3; font-size: 1.15rem; font-weight: 700; margin-top: 0;">🇿🇦 Complete Your Order</h4>
+    <p style="font-size: 0.85rem; line-height: 1.4; opacity: 0.85; margin-bottom: 15px;">
+        Happy with your design layout? Click below to finalize your item and pay safely via PayFast using Credit Card or Instant EFT.
+    </p>
+    <button onclick="redirectToPayFast()" style="display: block; width: 100%; border: none; background-color: #0056b3; color: #ffffff; font-weight: bold; font-size: 1rem; padding: 12px; border-radius: 6px; cursor: pointer;">
+        💳 Pay Securely via PayFast
+    </button>
+</div>
+"""

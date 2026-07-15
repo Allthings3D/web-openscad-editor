@@ -1,42 +1,86 @@
- # Project metadata
+# Project metadata
 [project]
-name = "AllThings3D Customizer"
+name = "AllThings3D Studio"
 uri = "https://allthings3d.co.za"
 
-# 1. INJECT THE SECURE PAYFAST BRAIN INTO THE SITE HEAD
+# INJECT A PREMIUM DESIGN THEME
 head-extra = """
 <style>
-    /* Security Rule: Lock down the model by hiding the default Save STL button completely */
+    /* 1. Brand New Layout Scheme */
+    :root, [data-bs-theme="auto"], [data-bs-theme="dark"], [data-bs-theme="light"] {
+        --page-bg: #f8fafc !important; /* Soft, clean crisp studio white background */
+        --page-fg: #0f172a !important; /* Deep charcoal professional text font color */
+        --border-color: #e2e8f0 !important; /* Clean, thin slate border dividing lines */
+        --render-log-bg: #ffffff !important; /* Pure white crisp panel background cards */
+        --customizer-modified-bg: #f1f5f9 !important;
+    }
+
+    /* 2. Style the Left Viewport Canvas Workspace Container */
+    #pane-left {
+        background-color: #ffffff !important;
+        border-right: 1px solid #e2e8f0 !important;
+    }
+    
+    #model {
+        background-color: #f8fafc !important; /* Light room setup for the 3D model */
+    }
+
+    /* 3. Style the Parameter Control Side Rail Panel */
+    #pane-right {
+        padding: 2rem !important;
+        background-color: #ffffff !important;
+        box-shadow: -4px 0 24px rgba(15, 23, 42, 0.03) !important;
+    }
+
+    /* 4. Make Form Variables Look Polished and Premium */
+    .form-control, .form-select {
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        padding: 10px 14px !important;
+        font-size: 0.95rem !important;
+        background-color: #ffffff !important;
+        color: #0f172a !important;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #0056b3 !important;
+        box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.15) !important;
+    }
+
+    /* 5. Clean up Header Text Styling metrics */
+    h3, .group-header {
+        font-weight: 700 !important;
+        color: #0f172a !important;
+        letter-spacing: -0.02em !important;
+    }
+
+    /* 6. Security Rule: Keep default download controls locked away */
     #download-stl { display: none !important; }
+    #controls { display: none !important; } /* Cleans raw render command buttons from view */
 </style>
 
 <script>
 function redirectToPayFast() {
-    // A. Locate the inputs generated on your live webpage layout
     var nameInput = document.querySelector('[id*="Customer_Name"]') || document.querySelector('[name*="Customer_Name"]') || document.querySelector('input[type="text"]');
     var customerText = nameInput ? nameInput.value : "NOT_PROVIDED";
     
     var thicknessInput = document.querySelector('[id*="Plate_Thickness"]') || document.querySelector('[name*="Plate_Thickness"]') || document.querySelector('input[type="range"]');
     var thicknessValue = thicknessInput ? thicknessInput.value : "2.5";
     
-    // B. Your official PayFast integration identifiers (Fill these in!)
-    var merchantId = 25113480;
-    var merchantKey =  xo7mpwdjhakex;
+    var merchantId = "PASTE_YOUR_PAYFAST_MERCHANT_ID_HERE";
+    var merchantKey = "PASTE_YOUR_PAYFAST_MERCHANT_KEY_HERE";
     var itemPrice = "120.00"; 
     var itemName = "Custom 3D Printed Name Keychain";
     
-    // C. Packaging configuration variables straight into the digital receipt
     var orderDescription = "Text: " + customerText + " | Thickness: " + thicknessValue + "mm";
 
-    // D. Assemble secure URL parameters payload
     var payfastUrl = "https://payfast.co.za" +
-        "?merchant_id=" + encodeURIComponent(merchantId) +
-        "&merchant_key=" + encodeURIComponent(merchantKey) +
+        "?merchant_id=" + encodeURIComponent(25113480) +
+        "&merchant_key=" + encodeURIComponent(xo7mpwdjhakex) +
         "&amount=" + encodeURIComponent(itemPrice) +
         "&item_name=" + encodeURIComponent(itemName) +
         "&item_description=" + encodeURIComponent(orderDescription);
 
-    // E. Execute routing redirection to PayFast gate portal
     window.location.href = payfastUrl;
 }
 </script>

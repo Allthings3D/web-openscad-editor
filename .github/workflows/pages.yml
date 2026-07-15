@@ -1,44 +1,40 @@
-name: Deploy to Cloudflare Pages
+name: Generate and Deploy to GitHub Pages
 
 on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch: {}
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     steps:
-      - name: Checkout
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Generate site
-        uses: ./
+      - name: Compile 3D Web App Editor
+        uses: yawkat/web-openscad-editor@v1
         with:
           config: editor.toml
-          output: out
 
-      - name: Publish
-        uses: cloudflare/wrangler-action@v3
-        id: cf_publish
+      - name: Setup Pages Infrastructure
+        uses: actions/configure-pages@v5
+
+      - name: Package Build Artifacts
+        uses: actions/upload-pages-artifact@v3
         with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy out/ --project-name=web-openscad-editor-yawk-at
-      - name: Check PR
-        uses: 8BitJonny/gh-get-current-pr@4.0.0
-        id: pr
-      - name: Comment on PR
-        if: github.event_name == 'pull_request' && steps.pr.outputs.pr_found == 'true' && steps.cf_publish.outcome == 'success'
-        uses: thollander/actions-comment-pull-request@v3
-        with:
-          comment-tag: deployment
-          message: ":rocket: Preview deployed to ${{ steps.cf_publish.outputs['pages-deployment-alias-url'] || steps.cf_publish.outputs['deployment-url'] }}"
-          pr-number: "${{steps.pr.outputs.number}}"
+          path: out
+
+      - name: Deploy to GitHub Pages Live
+        id: deployment
+        uses: actions/deploy-pages@v4

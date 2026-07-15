@@ -29,12 +29,23 @@ jobs:
 
       - name: Setup Pages Infrastructure
         uses: actions/configure-pages@v5
+      - name: Compile 3D Web App Editor
+        uses: yawkat/web-openscad-editor@v2.0.0
+        with:
+          config: editor.toml
+
+      - name: Inject Under Construction Homepage
+        run: cp index.html out/
+
+      - name: Setup Pages Infrastructure
+        uses: actions/configure-pages@v5
 
       - name: Package Build Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
           path: out
 
+  
   deploy:
     needs: build
     runs-on: ubuntu-latest

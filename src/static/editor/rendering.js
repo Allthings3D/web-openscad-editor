@@ -171,19 +171,23 @@ export function createRenderer({
     // ── render control ──────────────────────────────────────────────
 
     function startRender() {
-        clearRenderError(dom);
-        setRendering(true);
-        const currentCustomization = getCustomization();
-        const additionalParamNames = getAdditionalParamNames();
-        const normalParams = {};
-        const additionalParams = {};
-        for (const field in currentCustomization) {
-            if (additionalParamNames.includes(field)) {
-                additionalParams[field] = currentCustomization[field];
-            } else {
-                normalParams[field] = currentCustomization[field];
-            }
-        }
+    clearRenderError(dom);
+    setRendering(true);
+
+    const cfg = getCustomization(); // currentCustomization object
+    const scad = buildKeychainScad(cfg); // build SCAD string with font + color
+
+    worker.postMessage({
+        type: "render",
+        input: scad,   // send SCAD string instead of static path
+        normalParams: cfg,
+        additionalParams: getAdditionalParamNames().reduce((acc, name) => {
+            acc[name] = cfg[name];
+            return acc;
+        }, {}),
+    });
+}
+
         worker.postMessage({
             type: "render",
             input: scadInputPath,

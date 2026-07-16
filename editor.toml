@@ -2,17 +2,17 @@
 [project]
 name = "AllThings3D Creative Engine"
 uri = "https://allthings3d.co.za"
-[openscad]
-version = "2026.01.19"
-font-source = "system" # Tells the system to collect all repository font uploads automatically
-
 
 # ==========================================================================
-# 1. INJECT CUSTOM UNIVERSAL STYLES & THE PAYFAST REDIRECT BRAIN
+# 1. BIND THE MODEL AND FORCE THE SIDEBAR CUSTOM COMPONENT INJECTIONS
 # ==========================================================================
-head-extra = """
+[[model]]
+file = "models/keychain.scad"
+index = false 
+
+description-extra-html = """
+<!-- INJECT CUSTOM UNIVERSAL STYLES NATIVELY INTO THE PANEL CANVAS -->
 <style>
-    /* Premium Dark/Light Adaptive Layout Scheme */
     :root, [data-bs-theme="light"] {
         --page-bg: #f8fafc !important;
         --pane-bg-solid: #ffffff !important;
@@ -42,9 +42,10 @@ head-extra = """
     #pane-right { padding: 2.5rem 2rem !important; background-color: var(--pane-bg-solid) !important; border-left: 1px solid var(--border-color) !important; }
     .form-control, .form-select, .input-group-text { border: 1px solid var(--form-border) !important; border-radius: 8px !important; padding: 12px 16px !important; background-color: var(--form-input-bg) !important; color: var(--form-input-fg) !important; }
     h3, h4, .group-header, label { font-weight: 700 !important; color: var(--page-fg) !important; }
+    .customizer-group label { display: block !important; margin-bottom: 6px !important; font-size: 0.95rem !important; }
 
-    /* Security Rules: Hide default buttons safely without breaking the data listener track */
-    #download-stl { 
+    /* Security Rules: Hide rough system buttons safely so they vanish from the customer screen */
+    #download-stl, #render, label[for="auto-render"], .mt-2 { 
         display: none !important; 
     }
     #controls { 
@@ -58,11 +59,28 @@ head-extra = """
     }
 </style>
 
+<div style="margin-top: 25px; padding: 20px; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; background-color: var(--checkout-card-bg);">
+    
+    <!-- BRAND NEW INTERACTIVE UPDATE PREVIEW BUTTON -->
+    <button onclick="document.querySelector('#render').click();" style="display: block; width: 100%; border: none; background-color: #007bff; color: #ffffff; font-weight: 700; font-size: 1.05rem; padding: 14px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,123,255,0.2);">
+        ✨ Update 3D Preview
+    </button>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+    <h4 style="color: #0056b3; font-size: 1.15rem; font-weight: 700; margin-top: 0; margin-bottom: 8px !important;">🇿🇦 Order Details</h4>
+    <p style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 15px; opacity: 0.85; color: var(--page-fg);">
+        Our payment routing setup is live for layout testing. Once ready to launch, use the button below to pay securely in Rands.
+    </p>
+    <button onclick="redirectToPayFast()" style="display: block; width: 100%; border: none; background-color: #00b074; color: #ffffff; font-weight: bold; font-size: 1rem; padding: 12px; border-radius: 6px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,176,116,0.15);">
+        🚀 Pay Securely via PayFast
+    </button>
+</div>
+
 <script>
 function redirectToPayFast() {
     var textInput = document.querySelector('input[type="text"]') || document.querySelector('[id*="Text"]');
     var customerText = textInput ? textInput.value.replace(/[^a-zA-Z0-9 ]/g, "") : "NAME";
-    
     var rangeInput = document.querySelector('input[type="range"]') || document.querySelector('[id*="Thickness"]');
     var thicknessValue = rangeInput ? rangeInput.value : "2.5";
     
@@ -77,35 +95,9 @@ function redirectToPayFast() {
 """
 
 # ==========================================================================
-# 2. BIND THE MODEL AND RENDER THE SIDEBAR CHECKOUT INTERFACE
+# 2. TAB STRATIFICATION & DROPDOWN PARAMETER SCHEMAS
 # ==========================================================================
-[[model]]
-file = "models/keychain.scad"
-index = false 
 
-description-extra-html = """
-<div style="margin-top: 25px; padding: 20px; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; background-color: var(--checkout-card-bg);">
-    
-    <!-- INTERACTIVE UPDATE PREVIEW BUTTON (MATCHES GENERATE BUTTON STYLING) -->
-    <button onclick="document.getElementById('render').click();" style="display: block; width: 100%; border: none; background-color: #007bff; color: #ffffff; font-weight: 700; font-size: 1.05rem; padding: 14px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,123,255,0.2);">
-        ✨ Update 3D Preview
-    </button>
-
-    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
-
-    <h4 style="color: #0056b3; font-size: 1.15rem; font-weight: 700; margin-top: 0; margin-bottom: 8px !important;">🇿🇦 Order Details</h4>
-    <p style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 15px; opacity: 0.85; color: var(--page-fg);">
-        Our payment routing setup is live for layout testing. Once ready to launch, use the button below to pay securely in Rands.
-    </p>
-    <button onclick="redirectToPayFast()" style="display: block; width: 100%; border: none; background-color: #00b074; color: #ffffff; font-weight: bold; font-size: 1rem; padding: 12px; border-radius: 6px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,176,116,0.15);">
-        🚀 Pay Securely via PayFast
-    </button>
-</div>
-"""
-
-# ==========================================================================
-# 3. TAB STRATIFICATION & DROPDOWN PARAMETER SCHEMAS
-# ==========================================================================
 # ──── TAB 1: TEXT & FONT ────
 [model.tab-metadata."1. Text & Typography Settings"]
 collapsed = false
@@ -113,24 +105,6 @@ description-html = "Configure your custom wording text properties below:"
 
 [model.param-metadata.Font_name]
 description-html = "Font name <span style='opacity:0.6; font-size:0.85rem;'>for your keyring</span>"
-
-# Maps the clean dropdown words to OpenSCAD's exact internal font rendering tags
-[model.param-metadata.Font_name.presets]
-text = "Select a Font Style"
-[model.param-metadata.Font_name.presets.values]
-"Anton" = "Anton"
-"Pacifico" = "Pacifico"
-"Press Start 2P" = "Press Start 2P"
-"Racing Sans One" = "Racing Sans One"
-"Sigmar One" = "Sigmar One"
-"Snap ITC" = "Snap ITC"
-"Chewy" = "Chewy"
-"Forte" = "Forte"
-"Gloria Hallelujah" = "Gloria Hallelujah"
-"Lobster" = "Lobster"
-"Luckiest Guy" = "Luckiest Guy"
-"Open Sans Extra Bold" = "Open Sans:style=ExtraBold"
-"Oswald" = "Oswald"
 
 [model.param-metadata.Text]
 description-html = "Text <span style='opacity:0.6; font-size:0.85rem;'>for your keyring</span>"
@@ -140,8 +114,6 @@ description-html = "Font Size <span style='opacity:0.6; font-size:0.85rem;'>lett
 
 [model.param-metadata.Letter_Spacing]
 description-html = "Letter Spacing <span style='opacity:0.6; font-size:0.85rem;'>character separation alignment</span>"
-
-
 
 
 # ──── TAB 2: FILAMENT COLORS ────

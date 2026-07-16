@@ -1,46 +1,94 @@
 # Project metadata
 [project]
-name = "AllThings3D Creative Engine"
+name = "AllThings3D Custom Studio"
 uri = "https://allthings3d.co.za"
 
+# ──── REGISTER & BAKE SYSTEM FONTS INTO THE WEB ENGINE ────
+[openscad]
+version = "2026.01.19"
+font-source = "auto"
+enable-features = ["text-fonts"]
+
 # ==========================================================================
-# 1. INJECT CUSTOM UNIVERSAL STYLES & THE PAYFAST REDIRECT BRAIN
+# 1. PREMIUM SKIN INJECTION (TRANSFORMS INPUTS INTO GRID PILL BUTTONS)
 # ==========================================================================
 head-extra = """
 <style>
-    /* Premium Dark/Light Adaptive Layout Scheme */
-    :root, [data-bs-theme="light"] {
-        --page-bg: #f8fafc !important;
-        --pane-bg-solid: #ffffff !important;
-        --page-fg: #0f172a !important;
-        --border-color: #cbd5e1 !important;
-        --form-input-bg: #f8fafc !important;
-        --form-input-fg: #0f172a !important;
-        --form-border: #4b5563 !important;
-        --checkout-card-bg: #f1f5f9 !important;
+    /* Global Canvas Styling Reset */
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+        background-color: #f1f5f9 !important;
+        color: #0f172a !important;
     }
-    @media (prefers-color-scheme: dark) {
-        :root, [data-bs-theme="dark"] {
-            --page-bg: #090d16 !important;
-            --pane-bg-solid: #111827 !important;
-            --page-fg: #f8fafc !important;
-            --border-color: #374151 !important;
-            --form-input-bg: #1f2937 !important;
-            --form-input-fg: #f8fafc !important;
-            --form-border: #6b7280 !important;
-            --checkout-card-bg: #1f2937 !important;
-        }
+
+    #pane-left {
+        background-color: #ffffff !important;
     }
     
-    body { background-color: var(--page-bg) !important; color: var(--page-fg) !important; }
-    #pane-left { background-color: var(--pane-bg-solid) !important; border-right: 1px solid var(--border-color) !important; }
-    #model { background-color: var(--page-bg) !important; }
-    #pane-right { padding: 2.5rem 2rem !important; background-color: var(--pane-bg-solid) !important; border-left: 1px solid var(--border-color) !important; }
-    .form-control, .form-select, .input-group-text { border: 1px solid var(--form-border) !important; border-radius: 8px !important; padding: 12px 16px !important; background-color: var(--form-input-bg) !important; color: var(--form-input-fg) !important; }
-    h3, h4, .group-header, label { font-weight: 700 !important; color: var(--page-fg) !important; }
+    #model {
+        background-color: #ffffff !important;
+    }
 
-    /* Security Rules: Hide default buttons safely without breaking the data listener track */
-    #download-stl { 
+    /* Transform Sidebar Panel */
+    #pane-right {
+        background-color: #ffffff !important;
+        padding: 2.5rem 2rem !important;
+        box-shadow: -10px 0 30px rgba(0,0,0,0.03) !important;
+    }
+
+    /* Clean Up Tab Accordion Headers */
+    .group-header {
+        font-size: 1.1rem !important;
+        font-weight: 800 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.03em !important;
+        color: #0f172a !important;
+        border-bottom: 2px solid #3b82f6 !important;
+        padding-bottom: 8px !important;
+        margin-bottom: 20px !important;
+    }
+
+    /* FORCE SELECT DROPDOWNS TO LOOK LIKE GRID BUTTONS */
+    select.form-select {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
+        appearance: none !important;
+        background: #ffffff !important;
+        border: 2px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        padding: 12px !important;
+        font-weight: 700 !important;
+        color: #1e3a8a !important;
+        text-align: center !important;
+        cursor: pointer !important;
+    }
+
+    select.form-select:focus {
+        border-color: #3b82f6 !important;
+        background-color: #eff6ff !important;
+    }
+
+    /* Clean Up Typography Input Fields */
+    input[type="text"].form-control {
+        border: 2px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        padding: 12px !important;
+        font-size: 1.1rem !important;
+        font-weight: 600 !important;
+        text-transform: uppercase !important;
+    }
+
+    /* Premium Sleek Sliders styling */
+    input[type="range"] {
+        height: 8px !important;
+        border-radius: 9px !important;
+        background: #e2e8f0 !important;
+        accent-color: #3b82f6 !important;
+    }
+
+    /* Hide Original Engine Controls */
+    #download-stl, #render, label[for="auto-render"], .mt-2 { 
         display: none !important; 
     }
     #controls { 
@@ -49,8 +97,6 @@ head-extra = """
         height: 0 !important;
         width: 0 !important;
         overflow: hidden !important;
-        padding: 0 !important;
-        margin: 0 !important;
     }
 </style>
 
@@ -58,7 +104,6 @@ head-extra = """
 function redirectToPayFast() {
     var textInput = document.querySelector('input[type="text"]') || document.querySelector('[id*="Text"]');
     var customerText = textInput ? textInput.value.replace(/[^a-zA-Z0-9 ]/g, "") : "NAME";
-    
     var rangeInput = document.querySelector('input[type="range"]') || document.querySelector('[id*="Thickness"]');
     var thicknessValue = rangeInput ? rangeInput.value : "2.5";
     
@@ -73,88 +118,89 @@ function redirectToPayFast() {
 """
 
 # ==========================================================================
-# 2. BIND THE MODEL AND RENDER THE SIDEBAR CHECKOUT INTERFACE
+# 2. BIND MODEL AND RENDER ECOMMERCE ADD TO CART FOOTER BLOCK
 # ==========================================================================
 [[model]]
 file = "models/keychain.scad"
 index = false 
 
 description-extra-html = """
-<div style="margin-top: 25px; padding: 20px; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; background-color: var(--checkout-card-bg);">
-    
-    <!-- INTERACTIVE UPDATE PREVIEW BUTTON (MATCHES GENERATE BUTTON STYLING) -->
-    <button onclick="document.getElementById('render').click();" style="display: block; width: 100%; border: none; background-color: #007bff; color: #ffffff; font-weight: 700; font-size: 1.05rem; padding: 14px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,123,255,0.2);">
-        ✨ Update 3D Preview
+<!-- MANUFACTURE PRINTING INFORMATION CARD FOOTER -->
+<div style="margin-top: 30px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; text-align: left; margin-bottom: 20px;">
+    <div>
+        <small style="color: #64748b; font-weight: bold; text-transform: uppercase; font-size: 0.7rem;">Estimated Weight</small>
+        <div style="font-weight: 800; color: #0f172a; font-size: 1.1rem;">12 g</div>
+    </div>
+    <div>
+        <small style="color: #64748b; font-weight: bold; text-transform: uppercase; font-size: 0.7rem;">Print Time</small>
+        <div style="font-weight: 800; color: #0f172a; font-size: 1.1rem;">29 min</div>
+    </div>
+    <div>
+        <small style="color: #64748b; font-weight: bold; text-transform: uppercase; font-size: 0.7rem;">Size</small>
+        <div style="font-weight: 800; color: #0f172a; font-size: 1.1rem;">100 x 35 mm</div>
+    </div>
+    <div>
+        <small style="color: #64748b; font-weight: bold; text-transform: uppercase; font-size: 0.7rem;">Finish</small>
+        <div style="font-weight: 800; color: #0f172a; font-size: 1.1rem;">Matte</div>
+    </div>
+</div>
+
+<div style="padding: 10px 0; text-align: center;">
+    <!-- LIVE WEB ASSEMBLY UPDATE TRIGGER -->
+    <button onclick="document.querySelector('#render').click();" style="display: block; width: 100%; border: 2px solid #3b82f6; background-color: #ffffff; color: #3b82f6; font-weight: 700; font-size: 1.05rem; padding: 12px; border-radius: 8px; cursor: pointer; margin-bottom: 15px; transition: all 0.15s;">
+        🔄 Refresh 3D Preview
     </button>
 
-    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
-
-    <h4 style="color: #0056b3; font-size: 1.15rem; font-weight: 700; margin-top: 0; margin-bottom: 8px !important;">🇿🇦 Order Details</h4>
-    <p style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 15px; opacity: 0.85; color: var(--page-fg);">
-        Our payment routing setup is live for layout testing. Once ready to launch, use the button below to pay securely in Rands.
-    </p>
-    <button onclick="redirectToPayFast()" style="display: block; width: 100%; border: none; background-color: #00b074; color: #ffffff; font-weight: bold; font-size: 1rem; padding: 12px; border-radius: 6px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,176,116,0.15);">
-        🚀 Pay Securely via PayFast
+    <!-- PREMIUM PAYFAST CART TRIGGER -->
+    <button onclick="redirectToPayFast()" style="display: flex; align-items: center; justify-content: center; width: 100%; border: none; background-color: #00b074; color: #ffffff; font-weight: 800; font-size: 1.1rem; padding: 16px; border-radius: 8px; cursor: pointer; box-shadow: 0 10px 15px -3px rgba(0, 176, 116, 0.3);">
+        🛒 Add to Cart & Checkout
     </button>
 </div>
 """
 
 # ==========================================================================
-# 3. TAB STRATIFICATION & DROPDOWN PARAMETER SCHEMAS
+# 3. ACCORDION CONFIGURATIONS & MENU MAPPINGS
 # ==========================================================================
 
-# ──── TAB 1: TEXT & FONT ────
-[model.tab-metadata."1. Text & Typography Settings"]
+[model.tab-metadata."1. Personalise Your Keychain"]
 collapsed = false
-description-html = "Configure your custom wording text properties below:"
-
-[model.param-metadata.Font_name]
-description-html = "Font name <span style='opacity:0.6; font-size:0.85rem;'>for your keyring</span>"
 
 [model.param-metadata.Text]
-description-html = "Text <span style='opacity:0.6; font-size:0.85rem;'>for your keyring</span>"
+description-html = "<strong>NAME OR TEXT</strong>"
+
+[model.param-metadata.Font_name]
+description-html = "<strong>STYLE</strong>"
+
+[model.param-metadata.Font_name.presets]
+text = "Select Typography Theme"
+[model.param-metadata.Font_name.presets.values]
+"Modern (Oswald)"   = "Oswald"
+"Rounded (Chewy)"   = "Chewy"
+"Script (Pacifico)" = "Pacifico"
+"Bold (Anton)"      = "Anton"
+"Elegant (Lobster)" = "Lobster"
+"Playful (Luckiest)" = "Luckiest Guy"
 
 [model.param-metadata.Font_Size]
-description-html = "Font Size <span style='opacity:0.6; font-size:0.85rem;'>letter height multiplier</span>"
+description-html = "<strong>RAISED LETTERING HEIGHT</strong>"
 
-[model.param-metadata.Letter_Spacing]
-description-html = "Letter Spacing <span style='opacity:0.6; font-size:0.85rem;'>character separation alignment</span>"
-
-
-# ──── TAB 2: FILAMENT COLORS ────
 [model.tab-metadata."2. Dual-Filament Color Options"]
-collapsed = true
-description-html = "Select your production polymer color materials:"
+collapsed = false
 
 [model.param-metadata.Base_Color]
-description-html = "Base Color <span style='opacity:0.6; font-size:0.85rem;'>for your backing plate shell</span>"
+description-html = "<strong>KEYCHAIN BASE COLOR</strong>"
 
 [model.param-metadata.Text_Color]
-description-html = "Text Color <span style='opacity:0.6; font-size:0.85rem;'>for your raised lettering</span>"
+description-html = "<strong>LETTERING PLASTIC COLOR</strong>"
 
-
-# ──── TAB 3: BASE & LOOP CONTROLS ────
 [model.tab-metadata."3. Base Plate Structure Controls"]
 collapsed = true
-description-html = "Modify the physical footprint profiles and hanger loop tracking offsets:"
 
 [model.param-metadata.Base_Style]
-description-html = "Base Style <span style='opacity:0.6; font-size:0.85rem;'>overall structural arrangement</span>"
+description-html = "<strong>KEYCHAIN STYLE</strong>"
 
 [model.param-metadata.Plate_Thickness]
-description-html = "Plate Thickness <span style='opacity:0.6; font-size:0.85rem;'>foundation depth (mm)</span>"
+description-html = "<strong>BASEPLATE THICKNESS</strong>"
 
 [model.param-metadata.Border_Offset]
-description-html = "Border Offset <span style='opacity:0.6; font-size:0.85rem;'>bubble padding cushion (mm)</span>"
-
-
-# ──── TAB 4: LOOP SETTINGS ────
-[model.tab-metadata."4. Keyring Hanger Hanger Ring Loop Settings"]
-collapsed = true
-description-html = "Position your integrated hardware attachment links:"
-
-[model.param-metadata.Add_Hanger_Ring]
-description-html = "Add Hanger Ring <span style='opacity:0.6; font-size:0.85rem;'>include circle connector loop</span>"
-
-[model.param-metadata.Hanger_X_Position]
-description-html = "Hanger X Position <span style='opacity:0.6; font-size:0.85rem;'>horizontal adjustment tracking offsets</span>"
+description-html = "<strong>OFFSET BORDER MARGINS</strong>"

@@ -1,15 +1,12 @@
 # Project metadata
 [project]
-name = "AllThings3D Studio"
+name = "AllThings3D Core Engine"
 uri = "https://allthings3d.co.za"
 
-# Core backend compiler options
 [openscad]
 version = "2026.01.19"
 font-source = "auto"
 
-# Model definition map
 [[model]]
 file = "models/keychain.scad"
 index = false
-description-extra-html = "<h3>Welcome to the 3D Customizer Workspace</h3><p>Adjust the sliders on the left panel to update your custom keychain parameters dynamically.</p>"

@@ -1,11 +1,14 @@
 # Project metadata
 [project]
 name = "AllThings3D Creative Engine"
-uri = "https://allthings3d.co.za"
+uri = "https://www.allthings3d.co.za"
 
-# INJECT DUAL-THEME PREMIUM STYLES FOR THE GENERATOR
+# ==========================================================================
+# 1. INJECT CUSTOM UNIVERSAL STYLES & THE PAYFAST REDIRECT BRAIN
+# ==========================================================================
 head-extra = """
 <style>
+    /* Premium Layout Scheme (Auto Light & Dark Support) */
     :root, [data-bs-theme="light"] {
         --page-bg: #f8fafc !important;
         --pane-bg-solid: #ffffff !important;
@@ -28,30 +31,82 @@ head-extra = """
             --checkout-card-bg: #1f2937 !important;
         }
     }
+    
     body { background-color: var(--page-bg) !important; color: var(--page-fg) !important; }
     #pane-left { background-color: var(--pane-bg-solid) !important; border-right: 1px solid var(--border-color) !important; }
     #model { background-color: var(--page-bg) !important; }
     #pane-right { padding: 2.5rem 2rem !important; background-color: var(--pane-bg-solid) !important; border-left: 1px solid var(--border-color) !important; }
     .form-control, .form-select, .input-group-text { border: 1px solid var(--form-border) !important; border-radius: 8px !important; padding: 12px 16px !important; background-color: var(--form-input-bg) !important; color: var(--form-input-fg) !important; }
     h3, h4, .group-header, label { font-weight: 700 !important; color: var(--page-fg) !important; }
-    #download-stl, #controls { display: none !important; }
+
+    /* Security Rules: Move system controls off-screen safely without breaking the WASM render loops */
+    #download-stl { 
+        display: none !important; 
+    }
+    #controls { 
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
 </style>
+
+<script>
+function redirectToPayFast() {
+    // Dynamically look up user choices on the layout panel screen
+    var textInput = document.querySelector('input[type="text"]') || document.querySelector('[id*="Customer_Name"]');
+    var customerText = textInput ? textInput.value.replace(/[^a-zA-Z0-9 ]/g, "") : "NAME";
+    
+    var rangeInput = document.querySelector('input[type="range"]') || document.querySelector('[id*="Thickness"]');
+    var thicknessValue = rangeInput ? rangeInput.value : "2.5";
+    
+    // Paste your active South African PayFast Merchant Details right here later!
+    var merchantId = "123456"; 
+    var merchantKey = "abcdef";
+    var itemPrice = "120.00"; 
+    
+    var payfastUrl = "https://payfast.co.za" + encodeURIComponent(merchantId) + "&merchant_key=" + encodeURIComponent(merchantKey) + "&amount=" + encodeURIComponent(itemPrice) + "&item_name=Custom+3D+Keychain&item_description=" + encodeURIComponent("Text: " + customerText + " | Thickness: " + thicknessValue + "mm");
+    window.open(payfastUrl, "_blank");
+}
+</script>
 """
 
-# BIND THE MODEL AND RENDER THE SIDEBAR CHECKOUT INTERFACE
+# ==========================================================================
+# 2. BIND THE MODEL AND RENDER THE SIDEBAR CHECKOUT INTERFACE
+# ==========================================================================
 [[model]]
 file = "models/keychain.scad"
-index = false # Keeps the generator on /keychain.html securely
+index = false 
+
 description-extra-html = """
 <div style="margin-top: 25px; padding: 20px; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; background-color: var(--checkout-card-bg);">
-    <h4 style="color: #0056b3; font-size: 1.15rem; font-weight: 700; margin-top: 0;">🇿🇦 Order Details</h4>
+    <h4 style="color: #0056b3; font-size: 1.15rem; font-weight: 700; margin-top: 0; margin-bottom: 8px !important;">🇲🇿 Order Details</h4>
     <p style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 15px; opacity: 0.85;">
-        Our payment routing is currently undergoing updates. Customisation settings are live for testing.
+        Our payment routing setup is live for layout testing. Once ready to launch, use the button below to pay securely in Rands.
     </p>
-    <button style="display: block; width: 100%; border: none; background-color: #64748b; color: #ffffff; font-weight: bold; font-size: 1rem; padding: 12px; border-radius: 6px; cursor: not-allowed;" disabled>
-        🔒 Checkout Paused for Maintenance
+    <button onclick="redirectToPayFast()" style="display: block; width: 100%; border: none; background-color: #0056b3; color: #ffffff; font-weight: bold; font-size: 1rem; padding: 12px; border-radius: 6px; cursor: pointer;">
+        🚀 Pay Securely via PayFast
     </button>
-    [model.param-metadata.Base_Color]
+</div>
+"""
+
+# ==========================================================================
+# 3. CLEAN COMPONENT TEXT DESCRIPTION LABELS (Placed out of HTML blocks)
+# ==========================================================================
+[model.param-metadata.Customer_Name]
+description-html = "Type the text or name for your custom item below:"
+
+[model.param-metadata.Font_Size]
+description-html = "Lettering scale height dimension (in millimetres):"
+
+[model.param-metadata.Plate_Thickness]
+description-html = "Fitted baseline back plate foundation depth layer thickness (in millimetres):"
+
+[model.param-metadata.Border_Padding]
+description-html = "Outer boundary border frame thickness adjustment margins (in millimetres):"
+
+[model.param-metadata.Base_Color]
 description-html = "Select the <strong>Primary Filament Color</strong> for your background backing plate:"
 
 [model.param-metadata.Text_Color]
@@ -59,5 +114,3 @@ description-html = "Select the <strong>Accent Filament Color</strong> for your r
 
 [model.param-metadata.Base_Style]
 description-html = "Choose your overall structural shape style preference:"
-</div>
-"""

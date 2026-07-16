@@ -1,52 +1,100 @@
 // ──── ALLTHINGS3D PREMIUM MODULAR WORKSPACE BLUEPRINT ────
 
-// [ORDER VISUAL CUSTOMIZATION]
+/* [Text & Font] */
+
+// Pick an available typography font style configuration template
+Font_name = "Liberation Sans:style=Bold"; // [Liberation Sans:style=Bold, Liberation Serif:style=Bold]
 
 // Type the lettering text for your custom order layout below
-Customer_Name = "SMITH"; 
+Text = "Elodie";
 
-// Pick an available professional font style asset type typography configuration template
-Font_Style = "Liberation Sans:style=Bold"; // [Liberation Sans:style=Bold, Liberation Serif:style=Bold, Liberation Mono:style=Bold]
+// Global preview angle canvas viewport layout spin rotation metric
+Rotation = 0; // [0:5:360]
 
-// Size height dimension scale mapping values for your typography font
-Font_Size = 12; // [10:1:18]
-
-// Lettering spacing alignment factor adjustment (Squeeze metrics tighter to overlap safe vectors)
-Letter_Spacing = 0.95; // [0.85:0.05:1.15]
-
-
-// [FILAMENT COLORS (DUAL-COLOR PREVIEW)]
+/* [Filament Color Selector Controls] */
 
 // Select the primary filament color for the base plate foundation
 Base_Color = "Black"; // [Black, White, Red, Blue, Gold, Silver, Orange, Pink]
 
-// Select the accent filament color for the raised lettering text and border rim
-Text_Color = "Gold"; // [Black, White, Red, Blue, Gold, Silver, Orange, Pink]
+// Select the accent filament color for the raised lettering text characters
+Text_Color = "Pink"; // [Black, White, Red, Blue, Gold, Silver, Orange, Pink]
 
+/* [Base Structure Styles Configuration] */
 
-// [FOUNDATION INFRASTRUCTURE CONTROLS]
+// Choose your overall structural shape style preference layout
+Base_Style = "Text Contour Bubble"; // [Text Contour Bubble, Solid Rectangle Base, Word Only (No Base)]
 
-// Select the production structural style theme geometry arrangement configuration layout
-Base_Style = "Rounded Plate with Border"; // [Rounded Plate with Border, Rounded Plate (Flat), Fused Cutout Word Only]
-
-// Solid backing boundary baseline baseplate thickness footprint depth measurement scale values (in mm)
+// Foundation backing baseline footprint plate thickness measurement (in mm)
 Plate_Thickness = 2.5; // [1.5:0.5:4.5]
 
-// Outer parameter frame safety border padding margins edge cushion scale bounds metrics (in mm)
-Border_Padding = 8; // [6:1:14]
+// How far out the backing border bubble expands from the text edge bounds (in mm)
+Border_Offset = 4.0; // [2:0.5:8]
 
-// Attach a circular keychain hanger connector link loop ring component to the edge layout frame
-Add_Hanger_Ring = "Yes"; // [Yes, No]
+/* [Spacing and Height Options] */
+
+letter_1_height = 6; // [-20:1:20]
+letter_1_space = 10; // [-20:1:20]
+
+letter_2_height = 6; // [-20:1:20]
+letter_2_space = 8; // [-20:1:20]
+
+letter_3_height = 6; // [-20:1:20]
+letter_3_space = 9; // [-20:1:20]
+
+letter_4_height = 6; // [-20:1:20]
+letter_4_space = 9; // [-20:1:20]
+
+letter_5_height = 6; // [-20:1:20]
+letter_5_space = 8.6; // [-20:1:20]
+
+letter_6_height = 6; // [-20:1:20]
+letter_6_space = 14; // [-20:1:20]
+
+letter_7_height = 6; // [-20:1:20]
+letter_7_space = 9.5; // [-20:1:20]
+
+letter_8_height = 6; // [-20:1:20]
+letter_8_space = 9.7; // [-20:1:20]
+
+letter_9_height = 6; // [-20:1:20]
+letter_9_space = 9.6; // [-20:1:20]
+
+letter_10_height = 6; // [-20:1:20]
+letter_10_space = 9.6; // [-20:1:20]
+
+letter_11_height = 6; // [-20:1:20]
+letter_11_space = 9.4; // [-20:1:20]
+
+letter_12_height = 6; // [-20:1:20]
+letter_12_space = 9.5; // [-20:1:20]
+
+letter_13_height = 6; // [-20:1:20]
+letter_13_space = 20; // [-20:1:20]
+
+/* [ Twist ] */
+
+// angle in degrees
+twist = 0; // [-10:0.5:10]
+
+// of twist rotation
+center = 30; // [0:1:70]
+
+/* [ Loop Settings ] */
+
+// Horizontal attachment coordinate layout adjustment offsets
+Loop_x_position = 10; // [-150:1:50]
+
+// Vertical attachment coordinate layout adjustment offsets
+Loop_y_position = 0; // [-20:1:20]
+
+// Hanger loop internal symbol or alpha vector text string to use
+Loop_character = "o";
 
 
-// ──── AUTOMATED DESIGN MATH ENGINE (DO NOT ALTER LOGIC ROWS) ────
-Calculated_Length = (len(Customer_Name) * (Font_Size * 0.73)) + Border_Padding;
-Plate_Width = Font_Size + Border_Padding;
-Hanger_Diameter = Plate_Width * 0.55;
-Corner_Radius = 4; // Controls the roundness smoothness of the plate corners
-Border_Lip_Height = 1.0; // How high the border ridge sticks up past the base plate
+// ──── AUTOMATED ENGINE MODULE DESIGN MATH (DO NOT CHANGE) ────
+spacing = [0,letter_1_space,letter_2_space,letter_3_space,letter_4_space,letter_5_space,letter_6_space,letter_7_space, letter_8_space,letter_9_space,letter_10_space,letter_11_space,letter_12_space,letter_13_space];
+height = [letter_1_height,letter_2_height,letter_3_height,letter_4_height,letter_5_height,letter_6_height,letter_7_height,letter_8_height,letter_9_height,letter_10_height,letter_11_height,letter_12_height,letter_13_height];
 
-// Helper function to map text names to web colors inside the 3D viewer canvas
 module apply_filament_color(color_name) {
     if (color_name == "Black") color([0.15, 0.15, 0.15]) children();
     else if (color_name == "White") color([0.95, 0.95, 0.95]) children();
@@ -55,77 +103,58 @@ module apply_filament_color(color_name) {
     else if (color_name == "Gold") color([0.85, 0.65, 0.15]) children();
     else if (color_name == "Silver") color([0.65, 0.65, 0.65]) children();
     else if (color_name == "Orange") color([0.95, 0.45, 0.1]) children();
-    else if (color_name == "Pink") color([0.95, 0.5, 0.75]) children();
+    else if (color_name == "Pink") color([0.95, 0.55, 0.65]) children();
     else children();
 }
 
-// ──── RENDER BLOCKS (Separated outside union() to preserve browser color mapping) ────
-
-// 1. GENERATE THE FOUNDATION BASE PLATE
-if (Base_Style == "Rounded Plate (Flat)") {
-    apply_filament_color(Base_Color)
-    linear_extrude(height = Plate_Thickness) {
-        offset(r = Corner_Radius, $fn=12) {
-            square(size = [Calculated_Length - (Corner_Radius*2), Plate_Width - (Corner_Radius*2)], center = true);
-        }
+// 2D Profile representation generator loop module
+module raw_2d_text_layout() {
+    for (i = [0 : len(Text) - 1]) {
+        translate([(spacing[i]*i)-center, 0, 0])
+        text(size = 25, text = Text[i], font = Font_name, halign = "center", valign = "center", $fn = 12);
     }
 }
 
-// THE NEW: ROUNDED PLATE WITH A BEAUTIFUL RAISED TOP RIDGE BORDER
-if (Base_Style == "Rounded Plate with Border") {
-    // Render the main floor of the baseplate in the chosen Base Color
-    apply_filament_color(Base_Color)
-    linear_extrude(height = Plate_Thickness) {
-        offset(r = Corner_Radius, $fn=12) {
-            square(size = [Calculated_Length - (Corner_Radius*2), Plate_Width - (Corner_Radius*2)], center = true);
-        }
-    }
-    
-    // Render the raised outer lip border ring in the chosen Accent Text Color
-    translate([0, 0, Plate_Thickness])
-    apply_filament_color(Text_Color)
-    linear_extrude(height = Border_Lip_Height) {
-        difference() {
-            // Outer silhouette boundary
-            offset(r = Corner_Radius, $fn=12) {
-                square(size = [Calculated_Length - (Corner_Radius*2), Plate_Width - (Corner_Radius*2)], center = true);
-            }
-            // Inner hollow cutout footprint (Leaves a crisp 1.2mm wide border ridge line)
-            offset(r = Corner_Radius - 1.2, $fn=12) {
-                square(size = [Calculated_Length - (Corner_Radius*2), Plate_Width - (Corner_Radius*2)], center = true);
+// ──── FINAL PREVIEW RENDER BLOCKS LAYER ────
+rotate([0, 0, Rotation]) {
+
+    // STEP A: FOUNDATION BASE COATING GENERATION TARGETS
+    if (Base_Style == "Solid Rectangle Base") {
+        apply_filament_color(Base_Color)
+        linear_extrude(height = Plate_Thickness) {
+            offset(r = 4, $fn=12) {
+                square(size = [(len(Text)*10)+15, 30], center = true);
             }
         }
     }
-}
 
-// 2. GENERATE THE HIGH-RELIEF TEXT LETTERS
-Text_Z_Offset = (Base_Style != "Fused Cutout Word Only") ? Plate_Thickness : 0;
-Text_Height_Value = (Base_Style != "Fused Cutout Word Only") ? 3.5 : 4.5;
+    if (Base_Style == "Text Contour Bubble") {
+        apply_filament_color(Base_Color)
+        linear_extrude(height = Plate_Thickness) {
+            offset(r = Border_Offset, $fn = 12) {
+                raw_2d_text_layout();
+            }
+        }
+    }
 
-translate([0, 0, Text_Z_Offset])
-apply_filament_color(Text_Color)
-linear_extrude(height = Text_Height_Value) {
-    text(
-        text    = Customer_Name, 
-        size    = Font_Size, 
-        font    = Font_Style, 
-        spacing = Letter_Spacing,
-        halign  = "center", 
-        valign  = "center"
-    );
-}
-
-// 3. GENERATE THE INTEGRATED HANGER CONNECTOR KEYRING LOOP
-if (Add_Hanger_Ring == "Yes") {
-    Hanger_X_Position = -(Calculated_Length / 2);
-    Hanger_Thickness_Z = (Base_Style != "Fused Cutout Word Only") ? Plate_Thickness : 4.5;
+    // STEP B: RAISED EMBOSSED INDIVIDUAL TEXT LAYERING
+    Text_Z_Shift = (Base_Style != "Word Only (No Base)") ? Plate_Thickness : 0;
     
-    translate([Hanger_X_Position, 0, 0])
-    apply_filament_color(Base_Color)
-    linear_extrude(height = Hanger_Thickness_Z) {
-        difference() {
-            circle(d = Hanger_Diameter, $fn = 16);
-            circle(d = Hanger_Diameter * 0.55, $fn = 16);
+    translate([0, 0, Text_Z_Shift])
+    apply_filament_color(Text_Color) {
+        for (i = [0 : len(Text) - 1]) {
+            linear_extrude(height = height[i], twist = twist, $fn = 12) {
+                translate([(spacing[i]*i)-center, 0, 0])
+                text(size = 25, text = Text[i], font = Font_name, halign = "center", valign = "center", $fn = 12);
+            }
+        }
+    }
+
+    // STEP C: ATTACH HANGER WIDGET CONNECTOR LOOP RING
+    apply_filament_color(Base_Color) {
+        linear_extrude(height = Plate_Thickness, $fn = 12) {
+            translate ([-center-Loop_x_position, Loop_y_position, 0]) rotate([0, 0, -90]) 
+            text(size = 20, text = Loop_character, font = Font_name, halign = "center", valign = "center", $fn = 12);
         }
     }
 }

@@ -72,7 +72,7 @@ union() {
         apply_filament_color(Base_Color)
         linear_extrude(height = Plate_Thickness) {
             // Minkowski or offset trick to create smooth rounded corners for the slicer
-            offset(r = Corner_Radius, $fn=30) {
+            offset(r = Corner_Radius, $fn=12) {
                 square(size = [Calculated_Length - (Corner_Radius*2), Plate_Width - (Corner_Radius*2)], center = true);
             }
         }
@@ -104,8 +104,8 @@ union() {
         apply_filament_color(Base_Color)
         linear_extrude(height = Hanger_Thickness_Z) {
             difference() {
-                circle(d = Hanger_Diameter, $fn = 40);
-                circle(d = Hanger_Diameter * 0.55, $fn = 40);
+                circle(d = Hanger_Diameter, $fn = 16);
+                circle(d = Hanger_Diameter * 0.55, $fn = 16);
             }
         }
     }

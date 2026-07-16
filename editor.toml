@@ -71,7 +71,6 @@ function redirectToPayFast() {
 }
 </script>
 """
-
 # ==========================================================================
 # 2. BIND THE MODEL AND RENDER THE SIDEBAR CHECKOUT INTERFACE
 # ==========================================================================
@@ -81,8 +80,16 @@ index = false
 
 description-extra-html = """
 <div style="margin-top: 25px; padding: 20px; border: 1px solid var(--border-color); border-radius: 12px; text-align: center; background-color: var(--checkout-card-bg);">
-    <h4 style="color: #0056b3; font-size: 1.15rem; font-weight: 700; margin-top: 0; margin-bottom: 8px !important;">🇲🇿 Order Details</h4>
-    <p style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 15px; opacity: 0.85;">
+    
+    <!-- INTERACTIVE UPDATE PREVIEW BUTTON -->
+    <button onclick="document.getElementById('render').click();" style="display: block; width: 100%; border: 1px solid var(--form-border); background-color: var(--form-input-bg); color: var(--page-fg); font-weight: 700; font-size: 1rem; padding: 12px; border-radius: 8px; cursor: pointer; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: background 0.15s ease;">
+        🔄 Update 3D Preview
+    </button>
+
+    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+    <h4 style="color: #0056b3; font-size: 1.15rem; font-weight: 700; margin-top: 0; margin-bottom: 8px !important;">🇿🇦 Order Details</h4>
+    <p style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 15px; opacity: 0.85; color: var(--page-fg);">
         Our payment routing setup is live for layout testing. Once ready to launch, use the button below to pay securely in Rands.
     </p>
     <button onclick="redirectToPayFast()" style="display: block; width: 100%; border: none; background-color: #0056b3; color: #ffffff; font-weight: bold; font-size: 1rem; padding: 12px; border-radius: 6px; cursor: pointer;">
@@ -92,7 +99,7 @@ description-extra-html = """
 """
 
 # ==========================================================================
-# 3. CLEAN COMPONENT TEXT DESCRIPTION LABELS (Placed out of HTML blocks)
+# 3. CLEAN COMPONENT TEXT DESCRIPTION LABELS
 # ==========================================================================
 [model.param-metadata.Customer_Name]
 description-html = "Type the text or name for your custom item below:"
@@ -114,3 +121,5 @@ description-html = "Select the <strong>Accent Filament Color</strong> for your r
 
 [model.param-metadata.Base_Style]
 description-html = "Choose your overall structural shape style preference:"
+
+

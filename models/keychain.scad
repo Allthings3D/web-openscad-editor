@@ -20,14 +20,14 @@ Letter_Spacing = 0.95; // [0.85:0.05:1.15]
 // Select the primary filament color for the base plate foundation
 Base_Color = "Black"; // [Black, White, Red, Blue, Gold, Silver, Orange, Pink]
 
-// Select the accent filament color for the raised lettering text
+// Select the accent filament color for the raised lettering text and border rim
 Text_Color = "Gold"; // [Black, White, Red, Blue, Gold, Silver, Orange, Pink]
 
 
 // [FOUNDATION INFRASTRUCTURE CONTROLS]
 
 // Select the production structural style theme geometry arrangement configuration layout
-Base_Style = "Rounded Plate"; // [Rounded Plate, Sharp Backing Plate, Fused Cutout Word Only]
+Base_Style = "Rounded Plate with Border"; // [Rounded Plate with Border, Rounded Plate (Flat), Fused Cutout Word Only]
 
 // Solid backing boundary baseline baseplate thickness footprint depth measurement scale values (in mm)
 Plate_Thickness = 2.5; // [1.5:0.5:4.5]
@@ -44,10 +44,11 @@ Calculated_Length = (len(Customer_Name) * (Font_Size * 0.73)) + Border_Padding;
 Plate_Width = Font_Size + Border_Padding;
 Hanger_Diameter = Plate_Width * 0.55;
 Corner_Radius = 4; // Controls the roundness smoothness of the plate corners
+Border_Lip_Height = 1.0; // How high the border ridge sticks up past the base plate
 
 // Helper function to map text names to web colors inside the 3D viewer canvas
 module apply_filament_color(color_name) {
-    if (color_name == "Black") color([0.1, 0.1, 0.1]) children();
+    if (color_name == "Black") color([0.15, 0.15, 0.15]) children();
     else if (color_name == "White") color([0.95, 0.95, 0.95]) children();
     else if (color_name == "Red") color([0.85, 0.1, 0.1]) children();
     else if (color_name == "Blue") color([0.1, 0.4, 0.8]) children();
@@ -58,55 +59,73 @@ module apply_filament_color(color_name) {
     else children();
 }
 
-union() {
-    
-    // SECTION A: BASE HOUSING GENERATOR STYLES
-    if (Base_Style == "Sharp Backing Plate") {
-        apply_filament_color(Base_Color)
-        linear_extrude(height = Plate_Thickness) {
-            square(size = [Calculated_Length, Plate_Width], center = true);
+// ──── RENDER BLOCKS (Separated outside union() to preserve browser color mapping) ────
+
+// 1. GENERATE THE FOUNDATION BASE PLATE
+if (Base_Style == "Rounded Plate (Flat)") {
+    apply_filament_color(Base_Color)
+    linear_extrude(height = Plate_Thickness) {
+        offset(r = Corner_Radius, $fn=12) {
+            square(size = [Calculated_Length - (Corner_Radius*2), Plate_Width - (Corner_Radius*2)], center = true);
+        }
+    }
+}
+
+// THE NEW: ROUNDED PLATE WITH A BEAUTIFUL RAISED TOP RIDGE BORDER
+if (Base_Style == "Rounded Plate with Border") {
+    // Render the main floor of the baseplate in the chosen Base Color
+    apply_filament_color(Base_Color)
+    linear_extrude(height = Plate_Thickness) {
+        offset(r = Corner_Radius, $fn=12) {
+            square(size = [Calculated_Length - (Corner_Radius*2), Plate_Width - (Corner_Radius*2)], center = true);
         }
     }
     
-    if (Base_Style == "Rounded Plate") {
-        apply_filament_color(Base_Color)
-        linear_extrude(height = Plate_Thickness) {
-            // Minkowski or offset trick to create smooth rounded corners for the slicer
+    // Render the raised outer lip border ring in the chosen Accent Text Color
+    translate([0, 0, Plate_Thickness])
+    apply_filament_color(Text_Color)
+    linear_extrude(height = Border_Lip_Height) {
+        difference() {
+            // Outer silhouette boundary
             offset(r = Corner_Radius, $fn=12) {
+                square(size = [Calculated_Length - (Corner_Radius*2), Plate_Width - (Corner_Radius*2)], center = true);
+            }
+            // Inner hollow cutout footprint (Leaves a crisp 1.2mm wide border ridge line)
+            offset(r = Corner_Radius - 1.2, $fn=12) {
                 square(size = [Calculated_Length - (Corner_Radius*2), Plate_Width - (Corner_Radius*2)], center = true);
             }
         }
     }
+}
+
+// 2. GENERATE THE HIGH-RELIEF TEXT LETTERS
+Text_Z_Offset = (Base_Style != "Fused Cutout Word Only") ? Plate_Thickness : 0;
+Text_Height_Value = (Base_Style != "Fused Cutout Word Only") ? 3.5 : 4.5;
+
+translate([0, 0, Text_Z_Offset])
+apply_filament_color(Text_Color)
+linear_extrude(height = Text_Height_Value) {
+    text(
+        text    = Customer_Name, 
+        size    = Font_Size, 
+        font    = Font_Style, 
+        spacing = Letter_Spacing,
+        halign  = "center", 
+        valign  = "center"
+    );
+}
+
+// 3. GENERATE THE INTEGRATED HANGER CONNECTOR KEYRING LOOP
+if (Add_Hanger_Ring == "Yes") {
+    Hanger_X_Position = -(Calculated_Length / 2);
+    Hanger_Thickness_Z = (Base_Style != "Fused Cutout Word Only") ? Plate_Thickness : 4.5;
     
-    // SECTION B: HIGH-RELIEF TEXT STRUCTURE
-    Text_Z_Offset = (Base_Style != "Fused Cutout Word Only") ? Plate_Thickness : 0;
-    Text_Height_Value = (Base_Style != "Fused Cutout Word Only") ? 3.5 : 4.5;
-    
-    translate([0, 0, Text_Z_Offset])
-    apply_filament_color(Text_Color)
-    linear_extrude(height = Text_Height_Value) {
-        text(
-            text    = Customer_Name, 
-            size    = Font_Size, 
-            font    = Font_Style, 
-            spacing = Letter_Spacing,
-            halign  = "center", 
-            valign  = "center"
-        );
-    }
-    
-    // SECTION C: OPTIONAL INTEGRATED HANGER CONNECTOR WIDGET LOOP
-    if (Add_Hanger_Ring == "Yes") {
-        Hanger_X_Position = -(Calculated_Length / 2);
-        Hanger_Thickness_Z = (Base_Style != "Fused Cutout Word Only") ? Plate_Thickness : 4.5;
-        
-        translate([Hanger_X_Position, 0, 0])
-        apply_filament_color(Base_Color)
-        linear_extrude(height = Hanger_Thickness_Z) {
-            difference() {
-                circle(d = Hanger_Diameter, $fn = 16);
-                circle(d = Hanger_Diameter * 0.55, $fn = 16);
-            }
+    translate([Hanger_X_Position, 0, 0])
+    apply_filament_color(Base_Color)
+    linear_extrude(height = Hanger_Thickness_Z) {
+        difference() {
+            circle(d = Hanger_Diameter, $fn = 16);
+            circle(d = Hanger_Diameter * 0.55, $fn = 16);
         }
     }
 }

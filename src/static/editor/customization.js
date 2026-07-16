@@ -260,6 +260,15 @@ export function createCustomizationController({ defaultCustomization, additional
                 } else {
                     currentCustomization[name] = value;
                 }
+                else if (this.type === "color") {
+                const hex = this.value;
+                const bigint = parseInt(hex.slice(1), 16);
+                const r = ((bigint >> 16) & 255) / 255;
+                const g = ((bigint >> 8) & 255) / 255;
+                const b = (bigint & 255) / 255;
+                value = [r, g, b];
+                }
+
 
                 updateUrlFromCustomization();
                 syncCustomizationIndicators();

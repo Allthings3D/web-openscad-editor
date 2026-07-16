@@ -97,21 +97,14 @@ description-extra-html = """
     </button>
 </div>
 """
-
 # ==========================================================================
 # 3. CLEAN COMPONENT TEXT DESCRIPTION LABELS
 # ==========================================================================
-[model.param-metadata.Customer_Name]
+[model.param-metadata.Text]
 description-html = "Type the text or name for your custom item below:"
 
-[model.param-metadata.Font_Size]
-description-html = "Lettering scale height dimension (in millimetres):"
-
-[model.param-metadata.Plate_Thickness]
-description-html = "Fitted baseline back plate foundation depth layer thickness (in millimetres):"
-
-[model.param-metadata.Border_Padding]
-description-html = "Outer boundary border frame thickness adjustment margins (in millimetres):"
+[model.param-metadata.Font_name]
+description-html = "Pick an available typography font style configuration template:"
 
 [model.param-metadata.Base_Color]
 description-html = "Select the <strong>Primary Filament Color</strong> for your background backing plate:"
@@ -120,6 +113,30 @@ description-html = "Select the <strong>Primary Filament Color</strong> for your 
 description-html = "Select the <strong>Accent Filament Color</strong> for your raised lettering text:"
 
 [model.param-metadata.Base_Style]
-description-html = "Choose your overall structural shape style preference:"
+description-html = "Choose your overall structural shape style preference layout:"
+
+[model.param-metadata.Plate_Thickness]
+description-html = "Foundation backing baseline footprint plate thickness measurement (in millimetres):"
+
+[model.param-metadata.Border_Offset]
+description-html = "How far out the backing border bubble expands from the text edge bounds (in millimetres):"
+
+[model.param-metadata.Rotation]
+description-html = "Global preview angle canvas viewport layout spin rotation metric (degrees):"
+
+[model.param-metadata.twist]
+description-html = "Individual font geometry character distortion linear twist values (degrees):"
+
+[model.param-metadata.center]
+description-html = "Tracking adjustment reference core center points offset alignment metrics:"
+
+[model.param-metadata.Loop_character]
+description-html = "Hanger loop internal symbol or alpha vector text string to use (default: o):"
+
+[model.param-metadata.Loop_x_position]
+description-html = "Horizontal attachment loop keyring coordinate layout adjustment offsets:"
+
+[model.param-metadata.Loop_y_position]
+description-html = "Vertical attachment loop keyring coordinate layout adjustment offsets:"
 
 

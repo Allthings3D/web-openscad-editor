@@ -1,1 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AllThings3D | Custom 3D Workspace Studio</title>
+    <!-- Modern E-commerce Dashboard Framework -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        :root {
+            --studio-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-dark: #0f172a;
+            --border-slate: #cbd5e1;
+        }
+        body {
+            background-color: var(--studio-bg);
+            color: var(--text-dark);
+            height: 100vh;
+            overflow: hidden;
+        }
+        .main-layout {
+            display: grid;
+            grid-template-columns: 7fr 5fr;
+            height: 100vh;
+        }
+        /* 3D Canvas Box Area Styles */
+        .canvas-container {
+            background-color: #ffffff;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .canvas-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        /* Right Parameter Panel Control Side Rail */
+        .control-sidebar {
+            background-color: var(--card-bg);
+            border-left: 1px solid var(--border-slate);
+            padding: 2.5rem 2rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .input-label {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.03em;
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+        .form-control, .form-select {
+            padding: 12px 16px;
+            border: 2px solid var(--border-slate);
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+        /* Pricing & Print Matrix Footer Summary Layout */
+        .print-matrix-card {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            background-color: var(--studio-bg);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-slate);
+            margin: 25px 0;
+        }
+        .matrix-stat {
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+        .matrix-label {
+            color: #64748b;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-layout">
+        
+        <!-- LEFT SCREEN COLUMN: SMOOTH 3D VIEWER VIEWPORT ENGINE -->
+        <div class="canvas-container">
+            <!-- This directly embeds the core WASM renderer canvas context cleanly inside your custom HTML page -->
+            <iframe id="openscad-viewport" class="canvas-frame" src="./keychain.html"></iframe>
+        </div>
+
+        <!-- RIGHT SCREEN COLUMN: PREMIUM SLIDERS & ADD TO CART BAR MENU -->
+        <div class="control-sidebar">
+            <div>
+                <h4 class="mb-4 font-weight-bold" style="letter-spacing: -0.02em;">🔧 Personalise Your Keychain</h4>
+                
+                <!-- Wording String Input -->
+                <div class="mb-4">
+                    <div class="input-label">Name or Text String</div>
+                    <input type="text" id="text-param" class="form-control" value="Elodie" oninput="syncParamChange()">
+                </div>
+
+                <!-- Font Dropdown Prescription Preset Map -->
+                <div class="mb-4">
+                    <div class="input-label">Typography Theme Style</div>
+                    <select id="font-param" class="form-select" onchange="syncParamChange()">
+                        <option value="Oswald">Modern (Oswald)</option>
+                        <option value="Chewy">Rounded (Chewy)</option>
+                        <option value="Pacifico">Script (Pacifico)</option>
+                        <option value="Anton">Bold (Anton)</option>
+                        <option value="Lobster">Elegant (Lobster)</option>
+                        <option value="Luckiest Guy">Playful (Luckiest)</option>
+                    </select>
+                </div>
+
+                <!-- Filament Base Core Polymer Choice -->
+                <div class="mb-4">
+                    <div class="input-label">Keychain Base Color</div>
+                    <select id="base-color-param" class="form-select" onchange="syncParamChange()">
+                        <option value="Black">Solid Black</option>
+                        <option value="White">Pure White</option>
+                        <option value="Pink">Pastel Pink</option>
+                        <option value="Gold">Luxury Gold</option>
+                    </select>
+                </div>
+
+                <!-- Filament Text Raised Character Accent Choice -->
+                <div class="mb-4">
+                    <div class="input-label">Lettering Plastic Color</div>
+                    <select id="text-color-param" class="form-select" onchange="syncParamChange()">
+                        <option value="Pink">Pastel Pink</option>
+                        <option value="Black">Solid Black</option>
+                        <option value="White">Pure White</option>
+                        <option value="Gold">Luxury Gold</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- MANUFACTURING PROFILE TRACKER CARD & BILLING TRIGGERS -->
+            <div>
+                <div class="print-matrix-card">
+                    <div>
+                        <div class="matrix-label">Estimated Weight</div>
+                        <div class="matrix-stat">12 g</div>
+                    </div>
+                    <div>
+                        <div class="matrix-label">Print Time</div>
+                        <div class="matrix-stat">29 min</div>
+                    </div>
+                    <div>
+                        <div class="matrix-label">Size Dimensions</div>
+                        <div class="matrix-stat">100 x 35 mm</div>
+                    </div>
+                    <div>
+                        <div class="matrix-label">Surface Finish</div>
+                        <div class="matrix-stat">Matte Coated</div>
+                    </div>
+                </div>
+
+                <!-- PUSH RE-RENDER BUTTON LAYER -->
+                <button onclick="executeWasmRender()" class="btn btn-outline-primary w-100 py-2.5 mb-3 font-weight-bold" style="border-radius: 8px; font-weight: 700;">
+                    🔄 Refresh 3D Studio Preview
+                </button>
+
+                <!-- SECURE SOUTH AFRICAN GATE PAYFAST TRANSACTION BADGE -->
+                <button onclick="checkoutViaPayFast()" class="btn btn-success w-100 py-3 font-weight-bold" style="border-radius: 8px; font-weight: 800; background-color: #00b074; border: none; box-shadow: 0 10px 15px -3px rgba(0, 176, 116, 0.25);">
+                    🛒 Add to Cart & Checkout
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- WEB EVENT LISTENER BRAIN MATRIX -->
+    <script>
+        function syncParamChange() {
+            var iframe = document.getElementById('openscad-viewport');
+            if (!iframe || !iframe.contentWindow) return;
+
+            // Target the parameter selector controls embedded inside the OpenSCAD subframe context layer
+            var textVal = document.getElementById('text-param').value;
+            var fontVal = document.getElementById('font-param').value;
+            var baseColorVal = document.getElementById('base-color-param').value;
+            var textColorVal = document.getElementById('text-color-param').value;
+
+            // Dynamically force inject values directly into the running application runtime state variables row map
+            var targetTextInput = iframe.contentWindow.document.querySelector('input[type="text"]') || iframe.contentWindow.document.querySelector('[id*="Text"]');
+            if (targetTextInput) { targetTextInput.value = textVal; targetTextInput.dispatchEvent(new Event('input', { bubbles: true })); }
+
+            // Loop through frame dropdown selectors execution rows
+            var dropdowns = iframe.contentWindow.document.querySelectorAll('select');
+            if (dropdowns.length >= 3) {
+                dropdowns[0].value = fontVal; dropdowns[0].dispatchEvent(new Event('change', { bubbles: true }));
+                dropdowns[1].value = baseColorVal; dropdowns[1].dispatchEvent(new Event('change', { bubbles: true }));
+                dropdowns[2].value = textColorVal; dropdowns[2].dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        }
+
+        function executeWasmRender() {
+            syncParamChange();
+            var iframe = document.getElementById('openscad-viewport');
+            if (!iframe || !iframe.contentWindow) return;
+            
+            var nativeRenderBtn = iframe.contentWindow.document.querySelector('button#render') || iframe.contentWindow.document.getElementById('render');
+            if (nativeRenderBtn) { nativeRenderBtn.click(); }
+        }
+
+        function checkoutViaPayFast() {
+            var customerText = document.getElementById('text-param').value.replace(/[^a-zA-Z0-9 ]/g, "");
+            var payfastUrl = "https://payfast.co.za" + encodeURIComponent("Wording text choice: " + customerText);
+            window.open(payfastUrl, "_blank");
+        }
+    </script>
+</body>
+</html>
 

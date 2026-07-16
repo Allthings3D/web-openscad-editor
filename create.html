@@ -1,250 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AllThings3D | Premium Custom Studio</title>
-    <link href="https://jsdelivr.net" rel="stylesheet">
-    <style>
-        :root {
-            --studio-bg: #090d16;
-            --card-bg: #111827;
-            --text-dark: #f8fafc;
-            --border-slate: #374151;
-            --accent-primary: #60a5fa;
-            --accent-success: #00b074;
-        }
-        body {
-            background-color: var(--studio-bg);
-            color: var(--text-dark);
-            height: 100vh;
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-        .main-layout {
-            display: grid;
-            grid-template-columns: 7fr 5fr;
-            height: 100vh;
-        }
-        .canvas-container {
-            background-color: var(--studio-bg);
-            position: relative;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .canvas-card {
-            width: 100%;
-            height: 100%;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-slate);
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-        }
-        .canvas-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .control-sidebar {
-            background-color: var(--card-bg);
-            border-left: 1px solid var(--border-slate);
-            padding: 2.5rem 2rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .studio-title {
-            font-size: 1.35rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 25px;
-            border-bottom: 2px solid var(--border-slate);
-            padding-bottom: 12px;
-            color: #3b82f6;
-        }
-        .input-group-custom {
-            margin-bottom: 20px;
-        }
-        .input-label {
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
-            margin-bottom: 8px;
-            color: var(--text-dark);
-            opacity: 0.9;
-        }
-        .form-control, .form-select {
-            padding: 12px 16px;
-            border: 2px solid var(--border-slate);
-            border-radius: 8px;
-            font-weight: 600;
-            background-color: #1f2937;
-            color: var(--text-dark);
-        }
-        .form-control:focus, .form-select:focus {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
-            background-color: #1f2937;
-            color: var(--text-dark);
-        }
-        .print-matrix-card {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            background-color: var(--studio-bg);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--border-slate);
-            margin: 25px 0;
-        }
-        .matrix-stat {
-            font-weight: 800;
-            font-size: 1.05rem;
-            color: var(--text-dark);
-        }
-        .matrix-label {
-            color: #94a3b8;
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.65rem;
-            letter-spacing: 0.02em;
-        }
-        .btn-update {
-            display: block;
-            width: 100%;
-            border: 2px solid var(--accent-primary);
-            background-color: transparent;
-            color: var(--accent-primary);
-            font-weight: 700;
-            font-size: 1rem;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 15px;
-            transition: all 0.15s ease-in-out;
-        }
-        .btn-update:hover {
-            background-color: var(--accent-primary);
-            color: #ffffff;
-        }
-        .btn-checkout {
-            display: block;
-            width: 100%;
-            border: none;
-            background-color: var(--accent-success);
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 1.1rem;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 10px 15px -3px rgba(0, 176, 116, 0.2);
-            transition: all 0.15s ease-in-out;
-        }
-        @media only screen and (max-width: 992px) {
-            .main-layout { display: block; }
-            .canvas-container { height: 50vh; }
-            .control-sidebar { height: auto; overflow: visible; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AllThings3D | Create Your Keychain</title>
+  <style>
+    body {
+      background-color: #090d16;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    .hero {
+      text-align: center;
+      max-width: 600px;
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #60a5fa;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      color: #94a3b8;
+    }
+    .btn-start {
+      background-color: #00b074;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 10px 15px -3px rgba(0,176,116,0.2);
+      transition: all 0.2s ease-in-out;
+    }
+    .btn-start:hover {
+      background-color: #009060;
+    }
+  </style>
 </head>
 <body>
-
-    <div class="main-layout">
-        <div class="canvas-container">
-            <div class="canvas-card">
-                <iframe id="openscad-viewport" class="canvas-frame" src="./keychain.html"></iframe>
-            </div>
-        </div>
-
-        <div class="control-sidebar">
-            <div>
-                <div class="studio-title">⚙️ Personalise Your Item</div>
-                <div class="input-group-custom">
-                    <div class="input-label">Custom Name Text</div>
-                    <input type="text" id="text-param" class="form-control" value="Elodie">
-                </div>
-                <div class="input-group-custom">
-                    <div class="input-label">Typography Font Style</div>
-                    <select id="font-param" class="form-select">
-                        <option value="Lobster">Elegant Script (Lobster)</option>
-                        <option value="Oswald">Clean Modern (Oswald)</option>
-                        <option value="Chewy">Smooth Rounded (Chewy)</option>
-                        <option value="Pacifico">Handwritten (Pacifico)</option>
-                        <option value="Anton">Heavy Impact (Anton)</option>
-                        <option value="Luckiest Guy">Fun Playful (Luckiest)</option>
-                    </select>
-                </div>
-                <div class="input-group-custom">
-                    <div class="input-label">Keychain Base Color</div>
-                    <select id="base-color-param" class="form-select">
-                        <option value="Black">Solid Midnight Black</option>
-                        <option value="White">Pure Studio White</option>
-                        <option value="Pink">Pastel Bubblegum Pink</option>
-                        <option value="Gold">Luxury Metallic Gold</option>
-                    </select>
-                </div>
-                <div class="input-group-custom">
-                    <div class="input-label">Raised Text Color</div>
-                    <select id="text-color-param" class="form-select">
-                        <option value="Pink">Pastel Bubblegum Pink</option>
-                        <option value="Black">Solid Midnight Black</option>
-                        <option value="White">Pure Studio White</option>
-                        <option value="Gold">Luxury Metallic Gold</option>
-                    </select>
-                </div>
-            </div>
-
-            <div>
-                <div class="print-matrix-card">
-                    <div>
-                        <div class="matrix-label">Estimated Weight</div>
-                        <div class="matrix-stat">12 g</div>
-                    </div>
-                    <div>
-                        <div class="matrix-label">Print Time</div>
-                        <div class="matrix-stat">29 min</div>
-                    </div>
-                    <div>
-                        <div class="matrix-label">Dimensions</div>
-                        <div class="matrix-stat">100 x 35 mm</div>
-                    </div>
-                    <div>
-                        <div class="matrix-label">Surface Finish</div>
-                        <div class="matrix-stat">Matte Layered</div>
-                    </div>
-                </div>
-
-                <button onclick="executeWasmRender()" class="btn-update">
-                    🔄 Refresh 3D Studio Preview
-                </button>
-                <button onclick="checkoutViaPayFast()" class="btn-checkout">
-                    🛒 Add to Cart & Checkout
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        function executeWasmRender() {
-            var iframe = document.getElementById('openscad-viewport');
-            if (!iframe) return;
-            var textVal = encodeURIComponent(document.getElementById('text-param').value || "Elodie");
-            var fontVal = encodeURIComponent(document.getElementById('font-param').value);
-            var baseColorVal = encodeURIComponent(document.getElementById('base-color-param').value);
-            var textColorVal = encodeURIComponent(document.getElementById('text-color-param').value);
-            iframe.src = "./keychain.html#p.Text=" + textVal + "&p.Font_name=" + fontVal + "&p.Base_Color=" + baseColorVal + "&p.Text_Color=" + textColorVal;
-        }
-        function checkoutViaPayFast() {
-            var textInput = document.getElementById('text-param');
-            var customerText = textInput ? textInput.value.replace(/[^a-zA-Z0-9 ]/g, "") : "NAME";
-            window.open("https://payfast.co.za" + encodeURIComponent("Wording choice: " + customerText), "_blank");
-        }
-    </script>
+  <div class="hero">
+    <h1>✨ Welcome to AllThings3D Studio</h1>
+    <p>Design your own premium custom keychain with personalized text, fonts, colors, and hanger options. Click below to start creating in our interactive 3D editor.</p>
+    <button class="btn-start" onclick="window.location.href='keychain.html'">
+      🚀 Start Designing
+    </button>
+  </div>
 </body>
 </html>

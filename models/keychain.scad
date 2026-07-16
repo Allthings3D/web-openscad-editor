@@ -1,15 +1,18 @@
-// ──── ALLTHINGS3D PREMIUM MODULAR WORKSPACE BLUEPRINT ────
+// ──── ALLTHINGS3D COMPACT MULTI-FONT GENERATOR ENGINE ────
 
-/* [Text & Font] */
+/* [1. Text & Typography Settings] */
 
-// Pick an available typography font style configuration template
-Font_name = "Liberation Sans:style=Bold"; // [Liberation Sans:style=Bold, Liberation Serif:style=Bold]
-
-// Type the lettering text for your custom order layout below
+// Type the lettering name for your custom order layout below
 Text = "Elodie";
 
-// Global preview angle canvas viewport layout spin rotation metric
-Rotation = 0; // [0:5:360]
+// Pick a professional fun font style typography template
+Font_name = "Chewy"; // [Anton, Pacifico, Press Start 2P, Racing Sans One, Sigmar One, Snap ITC, Chewy, Forte, Gloria Hallelujah, Lobster, Luckiest Guy, Open Sans Extra Bold, Oswald]
+
+// Sizing height scale multiplier for your text lettering
+Font_Size = 13; // [10:1:22]
+
+// Global spacing gaps between text characters (Squeeze to safely overlap)
+Letter_Spacing = 1.0; // [0.8:0.05:1.2]
 
 /* [Filament Color Selector Controls] */
 

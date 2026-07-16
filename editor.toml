@@ -3,11 +3,10 @@
 name = "AllThings3D Custom Studio"
 uri = "https://allthings3d.co.za"
 
-# ──── REGISTER & BAKE SYSTEM FONTS INTO THE WEB ENGINE ────
+# ──── CORRECTED WEBASSEMBLY COMPILER CONTEXT ────
 [openscad]
 version = "2026.01.19"
 font-source = "auto"
-enable-features = ["text-fonts"]
 
 # ==========================================================================
 # 1. BIND THE MODEL AND FORCE THE SIDEBAR CUSTOM COMPONENT INJECTIONS
@@ -100,10 +99,10 @@ description-extra-html = """
 <script>
 function triggerAppUpdate() {
     var textInput = document.querySelector('input[type="text"]') || document.querySelector('[id*="Text"]');
-    var fontSelect = document.querySelector('select[id*="Font_name"]') || document.querySelector('select[name*="Font_name"]') || document.querySelectorAll('select')[0];
-    var baseColorSelect = document.querySelector('select[id*="Base_Color"]') || document.querySelector('select[name*="Base_Color"]') || document.querySelectorAll('select')[1];
-    var textColorSelect = document.querySelector('select[id*="Text_Color"]') || document.querySelector('select[name*="Text_Color"]') || document.querySelectorAll('select')[2];
-    var styleSelect = document.querySelector('select[id*="Base_Style"]') || document.querySelector('select[name*="Base_Style"]') || document.querySelectorAll('select')[3];
+    var fontSelect = document.querySelector('select[id*="Font_name"]') || document.querySelector('select[name*="Font_name"]') || document.querySelectorAll('select');
+    var baseColorSelect = document.querySelector('select[id*="Base_Color"]') || document.querySelector('select[name*="Base_Color"]') || document.querySelectorAll('select');
+    var textColorSelect = document.querySelector('select[id*="Text_Color"]') || document.querySelector('select[name*="Text_Color"]') || document.querySelectorAll('select');
+    var styleSelect = document.querySelector('select[id*="Base_Style"]') || document.querySelector('select[name*="Base_Style"]') || document.querySelectorAll('select');
 
     if (textInput) { textInput.dispatchEvent(new Event('input', { bubbles: true })); }
     if (fontSelect) { fontSelect.dispatchEvent(new Event('change', { bubbles: true })); }
@@ -191,5 +190,6 @@ description-html = "Border Offset <span style='opacity:0.6; font-size:0.85rem;'>
 [model.tab-metadata."4. Keyring Hanger Hanger Ring Loop Settings"]
 collapsed = true
 description-html = "Position your integrated hardware attachment links:"
-[model.param-metadata.Add_Hanger_Ring]description-html = "Add Hanger Ring include circle connector loop"
-[model.param-metadata.Hanger_X_Position]description-html = "Hanger X Position horizontal adjustment tracking offsets"
+
+[model.param-metadata.Add_Hanger_Ring]
+description-html = "Add Hanger Ring include circle connector loop"[model.param-metadata.Hanger_X_Position]description-html = "Hanger X Position horizontal adjustment tracking offsets"

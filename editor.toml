@@ -102,7 +102,6 @@ description-extra-html = """
 # ==========================================================================
 # 3. TAB STRATIFICATION & DROPDOWN PARAMETER SCHEMAS
 # ==========================================================================
-
 # ──── TAB 1: TEXT & FONT ────
 [model.tab-metadata."1. Text & Typography Settings"]
 collapsed = false
@@ -110,6 +109,24 @@ description-html = "Configure your custom wording text properties below:"
 
 [model.param-metadata.Font_name]
 description-html = "Font name <span style='opacity:0.6; font-size:0.85rem;'>for your keyring</span>"
+
+# Maps the clean dropdown words to OpenSCAD's exact internal font rendering tags
+[model.param-metadata.Font_name.presets]
+text = "Select a Font Style"
+[model.param-metadata.Font_name.presets.values]
+"Anton" = "Anton"
+"Pacifico" = "Pacifico"
+"Press Start 2P" = "Press Start 2P"
+"Racing Sans One" = "Racing Sans One"
+"Sigmar One" = "Sigmar One"
+"Snap ITC" = "Snap ITC"
+"Chewy" = "Chewy"
+"Forte" = "Forte"
+"Gloria Hallelujah" = "Gloria Hallelujah"
+"Lobster" = "Lobster"
+"Luckiest Guy" = "Luckiest Guy"
+"Open Sans Extra Bold" = "Open Sans:style=ExtraBold"
+"Oswald" = "Oswald"
 
 [model.param-metadata.Text]
 description-html = "Text <span style='opacity:0.6; font-size:0.85rem;'>for your keyring</span>"
@@ -119,6 +136,8 @@ description-html = "Font Size <span style='opacity:0.6; font-size:0.85rem;'>lett
 
 [model.param-metadata.Letter_Spacing]
 description-html = "Letter Spacing <span style='opacity:0.6; font-size:0.85rem;'>character separation alignment</span>"
+
+
 
 
 # ──── TAB 2: FILAMENT COLORS ────

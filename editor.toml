@@ -3,6 +3,14 @@
 name = "AllThings3D Creative Engine"
 uri = "https://allthings3d.co.za"
 
+# ──── REGISTER & BAKE SYSTEM FONTS INTO THE WEB ENGINE ────
+[openscad]
+version = "2026.01.19"
+font-source = "auto"
+# This forces the generator to scan and register every .ttf file in your folder path
+enable-features = ["text-fonts"]
+
+
 # ==========================================================================
 # 1. BIND THE MODEL AND FORCE THE SIDEBAR CUSTOM COMPONENT INJECTIONS
 # ==========================================================================

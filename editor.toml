@@ -51,5 +51,13 @@ description-extra-html = """
     <button style="display: block; width: 100%; border: none; background-color: #64748b; color: #ffffff; font-weight: bold; font-size: 1rem; padding: 12px; border-radius: 6px; cursor: not-allowed;" disabled>
         🔒 Checkout Paused for Maintenance
     </button>
+    [model.param-metadata.Base_Color]
+description-html = "Select the <strong>Primary Filament Color</strong> for your background backing plate:"
+
+[model.param-metadata.Text_Color]
+description-html = "Select the <strong>Accent Filament Color</strong> for your raised lettering text:"
+
+[model.param-metadata.Base_Style]
+description-html = "Choose your overall structural shape style preference:"
 </div>
 """

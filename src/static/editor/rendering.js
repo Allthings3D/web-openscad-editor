@@ -2,6 +2,7 @@
  * Worker lifecycle, render orchestration, camera application, error
  * display and STL download.
  */
+import { buildKeychainScad } from "./modelConfig.js";
 
 import { trackUmamiEvent } from "./analytics.js";
 

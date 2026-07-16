@@ -99,21 +99,18 @@ description-extra-html = """
 
 <script>
 function triggerAppUpdate() {
-    // 1. Locate all selection properties fields inside the sidebar panel
     var textInput = document.querySelector('input[type="text"]') || document.querySelector('[id*="Text"]');
     var fontSelect = document.querySelector('select[id*="Font_name"]') || document.querySelector('select[name*="Font_name"]') || document.querySelectorAll('select')[0];
     var baseColorSelect = document.querySelector('select[id*="Base_Color"]') || document.querySelector('select[name*="Base_Color"]') || document.querySelectorAll('select')[1];
     var textColorSelect = document.querySelector('select[id*="Text_Color"]') || document.querySelector('select[name*="Text_Color"]') || document.querySelectorAll('select')[2];
     var styleSelect = document.querySelector('select[id*="Base_Style"]') || document.querySelector('select[name*="Base_Style"]') || document.querySelectorAll('select')[3];
 
-    // 2. Safely apply custom text selections to the template listener objects matrix
     if (textInput) { textInput.dispatchEvent(new Event('input', { bubbles: true })); }
     if (fontSelect) { fontSelect.dispatchEvent(new Event('change', { bubbles: true })); }
     if (baseColorSelect) { baseColorSelect.dispatchEvent(new Event('change', { bubbles: true })); }
     if (textColorSelect) { textColorSelect.dispatchEvent(new Event('change', { bubbles: true })); }
     if (styleSelect) { styleSelect.dispatchEvent(new Event('change', { bubbles: true })); }
 
-    // 3. Command the hidden core compile button element to fire rendering logic
     var nativeRenderBtn = document.querySelector('button#render') || document.getElementById('render');
     if (nativeRenderBtn) { nativeRenderBtn.click(); }
 }
@@ -165,7 +162,6 @@ description-html = "Font Size <span style='opacity:0.6; font-size:0.85rem;'>lett
 [model.param-metadata.Letter_Spacing]
 description-html = "Letter Spacing <span style='opacity:0.6; font-size:0.85rem;'>character separation alignment</span>"
 
-
 # ──── TAB 2: FILAMENT COLORS ────
 [model.tab-metadata."2. Dual-Filament Color Options"]
 collapsed = true
@@ -176,7 +172,6 @@ description-html = "Base Color <span style='opacity:0.6; font-size:0.85rem;'>for
 
 [model.param-metadata.Text_Color]
 description-html = "Text Color <span style='opacity:0.6; font-size:0.85rem;'>for your raised lettering</span>"
-
 
 # ──── TAB 3: BASE & LOOP CONTROLS ────
 [model.tab-metadata."3. Base Plate Structure Controls"]
@@ -190,3 +185,11 @@ description-html = "Base Style <span style='opacity:0.6; font-size:0.85rem;'>ove
 description-html = "Plate Thickness <span style='opacity:0.6; font-size:0.85rem;'>foundation depth (mm)</span>"
 
 [model.param-metadata.Border_Offset]
+description-html = "Border Offset <span style='opacity:0.6; font-size:0.85rem;'>bubble padding cushion (mm)</span>"
+
+# ──── TAB 4: LOOP SETTINGS ────
+[model.tab-metadata."4. Keyring Hanger Hanger Ring Loop Settings"]
+collapsed = true
+description-html = "Position your integrated hardware attachment links:"
+[model.param-metadata.Add_Hanger_Ring]description-html = "Add Hanger Ring include circle connector loop"
+[model.param-metadata.Hanger_X_Position]description-html = "Hanger X Position horizontal adjustment tracking offsets"

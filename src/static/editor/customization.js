@@ -45,6 +45,26 @@ function base64DecodeUtf8(text) {
  * @param {string[]} opts.additionalParamNames  - names of "additional" params
  * @param {function} opts.onChanged             - called after any value change
  */
+// ── default customization ──────────────────────────────────────────
+const defaultCustomization = {
+  text: "Tammy",
+  font: "Chewy:style=Regular",
+  raised: 16,
+  spacing: 1,
+  baseColor: [0,0,0],       // black
+  textColor: [1,0.4,0.8],   // pink
+  length: 100,
+  height: 35,
+  textBorder: 0.5,
+  baseBorder: 3.5,
+  hole1Enabled: true,
+  hole1X: 1,
+  hole1Y: 0,
+  hole2Enabled: true,
+  hole2X: 66,
+  hole2Y: 0
+};
+
 export function createCustomizationController({ defaultCustomization, additionalParamNames, onChanged }) {
     // Deep-clone so mutations never leak back to the frozen default.
     const currentCustomization = JSON.parse(JSON.stringify(defaultCustomization));
@@ -241,50 +261,52 @@ export function createCustomizationController({ defaultCustomization, additional
     }
 
     function attachInputListeners() {
-        for (const input of document.querySelectorAll(".customizer")) {
-            const name = input.getAttribute("attr-name");
-            const index = input.getAttribute("attr-index");
-            input.addEventListener("change", function () {
-                let value;
-                if (this.type === "checkbox") {
-                    value = this.checked;
-                } else if (this.type === "select-one") {
-                    value = JSON.parse(this.value);
-                } else if (this.type === "number") {
-                    value = this.valueAsNumber;
-                } else {
-                    value = this.value;
-                }
-                if (index !== null) {
-                    currentCustomization[name][index] = value;
-                } else {
-                    currentCustomization[name] = value;
-                }
-                else if (this.type === "color") {
-                const hex = this.value;
-                const bigint = parseInt(hex.slice(1), 16);
-                const r = ((bigint >> 16) & 255) / 255;
-                const g = ((bigint >> 8) & 255) / 255;
-                const b = (bigint & 255) / 255;
-                value = [r, g, b];
-                }
+  for (const input of document.querySelectorAll(".customizer")) {
+    const name = input.getAttribute("attr-name");
+    const index = input.getAttribute("attr-index");
 
+    input.addEventListener("change", function () {
+      let value;
+      if (this.type === "checkbox") {
+        value = this.checked;
+      } else if (this.type === "color") {
+        const hex = this.value;
+        const bigint = parseInt(hex.slice(1), 16);
+        const r = ((bigint >> 16) & 255) / 255;
+        const g = ((bigint >> 8) & 255) / 255;
+        const b = (bigint & 255) / 255;
+        value = [r, g, b];
+      } else if (this.type === "number") {
+        value = this.valueAsNumber;
+      } else if (this.type === "select-one") {
+        value = JSON.parse(this.value);
+      } else {
+        value = this.value;
+      }
 
-                updateUrlFromCustomization();
-                syncCustomizationIndicators();
-                onChanged();
-            });
-        }
+      if (index !== null) {
+        currentCustomization[name][index] = value;
+      } else {
+        currentCustomization[name] = value;
+      }
 
-        for (const btn of document.querySelectorAll(".customizer-reset")) {
-            btn.addEventListener("click", () => {
-                const name = btn.getAttribute("attr-name");
-                if (!name || !(name in defaultCustomization)) {
-                    return;
-                }
-                setValue(name, JSON.parse(JSON.stringify(defaultCustomization[name])));
-            });
-        }
+      updateUrlFromCustomization();
+      syncCustomizationIndicators();
+      onChanged();
+    });
+  }
+
+  for (const btn of document.querySelectorAll(".customizer-reset")) {
+    btn.addEventListener("click", () => {
+      const name = btn.getAttribute("attr-name");
+      if (!name || !(name in defaultCustomization)) {
+        return;
+      }
+      setValue(name, JSON.parse(JSON.stringify(defaultCustomization[name])));
+    });
+  }
+}
+
     }
 
     function getCurrentCustomization() {
@@ -309,3 +331,4 @@ export function createCustomizationController({ defaultCustomization, additional
         getAdditionalParamNames,
     };
 }
+export { defaultCustomization };

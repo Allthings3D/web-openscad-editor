@@ -2,6 +2,10 @@
 [project]
 name = "AllThings3D Creative Engine"
 uri = "https://allthings3d.co.za"
+[openscad]
+version = "2026.01.19"
+font-source = "system" # Tells the system to collect all repository font uploads automatically
+
 
 # ==========================================================================
 # 1. INJECT CUSTOM UNIVERSAL STYLES & THE PAYFAST REDIRECT BRAIN

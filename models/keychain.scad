@@ -19,15 +19,21 @@ Plate_Width = Font_Size + (Border_Offset * 2);
 Hanger_Diameter = Plate_Width * 0.55;
 $fn = 45;
 
-// Font resolver
+// Flexible font resolver: supports multiple filename variants
 function resolve_font_path(font_selection) =
     (font_selection == "Oswald") ? "fonts/Oswald.ttf" :
     (font_selection == "Chewy") ? "fonts/Chewy.ttf" :
+    (font_selection == "Chewy-Regular") ? "fonts/Chewy-Regular.ttf" :
     (font_selection == "Pacifico") ? "fonts/Pacifico.ttf" :
+    (font_selection == "Pacifico-Regular") ? "fonts/Pacifico-Regular.ttf" :
     (font_selection == "Anton") ? "fonts/Anton.ttf" :
+    (font_selection == "Anton-Regular") ? "fonts/Anton-Regular.ttf" :
     (font_selection == "Lobster") ? "fonts/Lobster.ttf" :
+    (font_selection == "Lobster-Regular") ? "fonts/Lobster-Regular.ttf" :
     (font_selection == "Luckiest Guy") ? "fonts/LuckiestGuy.ttf" :
-    "Liberation Sans:style=Bold";
+    (font_selection == "LuckiestGuy-Regular") ? "fonts/LuckiestGuy-Regular.ttf" :
+    "Liberation Sans:style=Bold"; // fallback system font
+
 
 Active_Font = resolve_font_path(Font_name);
 
